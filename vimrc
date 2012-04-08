@@ -1,3 +1,5 @@
+set nocompatible                  " Must come first because it changes other options.
+
 set smartindent
 set tabstop=4
 set shiftwidth=4
@@ -9,10 +11,25 @@ set number
 call pathogen#infect()
 filetype plugin indent on
 
-"set backspace=indent,eol,start    " Intuitive backspacing.
+runtime plugin/matchit.vim        " Load the matchit plugin.
+
+set backspace=indent,eol,start    " Intuitive backspacing.
+
+set hidden                        " Handle multiple buffers better.
+
+set wildmenu                      " Enhanced command line completion.
+set wildmode=list:longest         " Complete files like a shell.
 
 set ignorecase                    " Case-insensitive searching.
 set smartcase                     " But case-sensitive if expression contains a capital letter.
+
+set incsearch                     " Highlight matches as you type.
+set hlsearch                      " Highlight matches.
+
+set title                         " Set the terminal's title
+
+set laststatus=2                  " Show the status line all the time
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 " vim-latexsuite settings
 set grepprg=grep\ -nH\ $*
