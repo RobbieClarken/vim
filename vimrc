@@ -8,7 +8,9 @@ cmap w!! w !sudo dd of=%
 colorscheme molokai
 syntax on
 set number
+
 call pathogen#infect()
+call pathogen#helptags()
 filetype plugin indent on
 
 runtime plugin/matchit.vim        " Load the matchit plugin.
@@ -49,3 +51,13 @@ map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 
+" Python mode
+let g:pymode_lint_write = 0
+let g:pymode_folding = 0
+" let g:pymode_run_key = 'R'
+
+autocmd FileType jade setlocal shiftwidth=2 tabstop=2
+
+" Fix tab completion for file names
+set wildmode=longest,list,full
+set wildmenu
