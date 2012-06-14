@@ -1,8 +1,8 @@
 set nocompatible                  " Must come first because it changes other options.
 
 set smartindent
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 cmap w!! w !sudo dd of=%
 colorscheme molokai
@@ -56,7 +56,8 @@ let g:pymode_lint_write = 0
 let g:pymode_folding = 0
 " let g:pymode_run_key = 'R'
 
-autocmd FileType jade setlocal shiftwidth=2 tabstop=2
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
+autocmd FileType js setlocal shiftwidth=2 tabstop=2
 
 " Fix tab completion for file names
 set wildmode=longest,list,full
