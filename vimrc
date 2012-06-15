@@ -13,7 +13,7 @@ call pathogen#infect()
 call pathogen#helptags()
 filetype plugin indent on
 
-runtime plugin/matchit.vim        " Load the matchit plugin.
+"runtime plugin/matchit.vim        " Load the matchit plugin.
 
 set backspace=indent,eol,start    " Intuitive backspacing.
 
@@ -31,14 +31,7 @@ set hlsearch                      " Highlight matches.
 set title                         " Set the terminal's title
 
 set laststatus=2                  " Show the status line all the time
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
-
-" vim-latexsuite settings
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-
-" LustyExplorer
-set hidden
+"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 " Tab mappings
 map <leader>tt :tabnew<cr>
