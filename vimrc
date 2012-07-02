@@ -40,7 +40,7 @@ map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>to :tabonly<cr>
 map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
+map <leader>tN :tabprevious<cr>
 map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
@@ -54,5 +54,6 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
 
 " Fix tab completion for file names
-set wildmode=longest,list,full
-set wildmenu
+set wildmode=longest,list
+
+set clipboard=unnamed
