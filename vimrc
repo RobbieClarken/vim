@@ -1,4 +1,5 @@
-set nocompatible                  " Must come first because it changes other options.
+set nocompatible                  " use iMproved features
+filetype off                      " required for vundle
 
 set smartindent
 set tabstop=2
@@ -9,8 +10,14 @@ colorscheme molokai
 syntax on
 set number
 
-call pathogen#infect()
-call pathogen#helptags()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+
+" call pathogen#infect()
+" call pathogen#helptags()
 filetype plugin indent on
 
 "runtime plugin/matchit.vim        " Load the matchit plugin.
@@ -44,6 +51,8 @@ map <leader>tN :tabprevious<cr>
 map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
+
+inoremap jj <Esc>
 
 " Python mode
 let g:pymode_lint_write = 0
