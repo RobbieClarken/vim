@@ -20,8 +20,6 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 " call pathogen#helptags()
 filetype plugin indent on
 
-"runtime plugin/matchit.vim        " Load the matchit plugin.
-
 set backspace=indent,eol,start    " Intuitive backspacing.
 
 set hidden                        " Handle multiple buffers better.
@@ -38,7 +36,6 @@ set hlsearch                      " Highlight matches.
 set title                         " Set the terminal's title
 
 set laststatus=2                  " Show the status line all the time
-"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 " Tab mappings
@@ -57,7 +54,11 @@ inoremap jj <Esc>
 " Python mode
 let g:pymode_lint_write = 0
 let g:pymode_folding = 0
-" let g:pymode_run_key = 'R'
+
+" LaTeX-Box settings
+imap <buffer> ]]		  <Plug>LatexCloseCurEnv
+let g:LatexBox_viewer = 'skim'
+let g:LatexBox_latexmk_options = '-pvc'
 
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
