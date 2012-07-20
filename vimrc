@@ -57,10 +57,12 @@ let g:pymode_folding = 0
 
 " LaTeX-Box settings
 imap <buffer> ]]		  <Plug>LatexCloseCurEnv
+map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
 let g:LatexBox_viewer = 'skim'
 let g:LatexBox_latexmk_options = '-pvc'
 
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
+autocmd FileType tex setlocal shiftwidth=4 tabstop=4
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
 
 " Fix tab completion for file names
