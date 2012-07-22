@@ -14,10 +14,11 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
+Bundle 'klen/python-mode'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'pangloss/vim-javascript'
+Bundle 'digitaltoad/vim-jade'
 
-" call pathogen#infect()
-" call pathogen#helptags()
 filetype plugin indent on
 
 set backspace=indent,eol,start    " Intuitive backspacing.
