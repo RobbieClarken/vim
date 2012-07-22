@@ -53,7 +53,6 @@ map <leader>tm :tabmove
 inoremap jj <Esc>
 
 " Python mode
-let g:pymode_lint_write = 0
 let g:pymode_folding = 0
 
 " LaTeX-Box settings
