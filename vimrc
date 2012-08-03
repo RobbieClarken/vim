@@ -5,6 +5,15 @@ set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+set wrap
+set linebreak
+set nolist
+
+set spelllang=en_au               " Use Australian English
+" Turn spelling on and off
+nmap <silent> <leader>s :set spell!<CR>
+
 cmap w!! w !sudo dd of=%
 colorscheme molokai
 syntax on
@@ -54,8 +63,10 @@ inoremap jj <Esc>
 
 " Python mode
 let g:pymode_folding = 0
+let pymode_lint_checker = ''
+let pymode_lint_checker = 'pylint,pep8'
 
-" LaTeX-Box settings
+" LaTeX-Box
 imap <buffer> ]]		  <Plug>LatexCloseCurEnv
 map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
 let g:LatexBox_viewer = 'skim'
