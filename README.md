@@ -1,7 +1,7 @@
 Installation
 ------------
 
-```git clone https://github.com/RobbieClarken/vim ~/.vim
+``` git clone https://github.com/RobbieClarken/vim ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 cd ~/.vim
 git submodule init
