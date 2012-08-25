@@ -27,6 +27,7 @@ Bundle 'klen/python-mode'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'pangloss/vim-javascript'
 Bundle 'digitaltoad/vim-jade'
+Bundle 'walm/jshint.vim'
 
 filetype plugin indent on
 
@@ -58,6 +59,8 @@ map <leader>tN :tabprevious<cr>
 map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
+
+map <leader>j :JSHint<cr>
 
 inoremap jj <Esc>
 
