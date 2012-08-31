@@ -78,6 +78,7 @@ let g:LatexBox_latexmk_options = '-pvc'
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType tex setlocal shiftwidth=4 tabstop=4
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
+autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 
 " Fix tab completion for file names
 set wildmode=longest,list
