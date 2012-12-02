@@ -67,7 +67,7 @@ inoremap jj <Esc>
 " Python mode
 let g:pymode_folding = 0
 let pymode_lint_checker = ''
-let pymode_lint_checker = 'pylint,pep8'
+" let pymode_lint_checker = 'pylint,pep8'
 
 " LaTeX-Box
 imap <buffer> ]]		  <Plug>LatexCloseCurEnv
