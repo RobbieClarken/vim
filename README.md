@@ -18,6 +18,6 @@ Typing unicode characters
 For [greek symbols](http://en.wikipedia.org/wiki/Greek_alphabet#Greek_in_Unicode):
 
     α = 03B1
-    β = 03B1
+    β = 03B2
     ...
     ω = 03C9
