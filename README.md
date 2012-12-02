@@ -12,9 +12,10 @@ Tips
 ----
 
 Typing unicode characters
-  ^v u<4 digit hex>
-For [greek symbols http://en.wikipedia.org/wiki/Greek_alphabet#Greek_in_Unicode]:
-  α = 03B1
-  β = 03B1
-  ...
-  ω = 03C9
+    ^v u<4 digit hex>
+
+For [greek symbols](http://en.wikipedia.org/wiki/Greek_alphabet#Greek_in_Unicode):
+    α = 03B1
+    β = 03B1
+    ...
+    ω = 03C9
