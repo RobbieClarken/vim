@@ -23,8 +23,6 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'klen/python-mode'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'pangloss/vim-javascript'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'walm/jshint.vim'
@@ -59,21 +57,6 @@ map <leader>tN :tabprevious<cr>
 map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
-
-map <leader>j :JSHint<cr>
-
-inoremap jj <Esc>
-
-" Python mode
-let g:pymode_folding = 0
-let pymode_lint_checker = ''
-" let pymode_lint_checker = 'pylint,pep8'
-
-" LaTeX-Box
-imap <buffer> ]]		  <Plug>LatexCloseCurEnv
-map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
-let g:LatexBox_viewer = 'skim'
-let g:LatexBox_latexmk_options = '-pvc'
 
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType tex setlocal shiftwidth=4 tabstop=4
