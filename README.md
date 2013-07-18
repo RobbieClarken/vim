@@ -2,11 +2,9 @@ Installation
 ------------
 
 ```bash
-git clone https://github.com/RobbieClarken/vim ~/.vim
+git clone --recursive https://github.com/RobbieClarken/vim ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 cd ~/.vim
-git submodule init
-git submodule update
 vim +BundleInstall +qall
 ```
 
