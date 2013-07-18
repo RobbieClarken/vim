@@ -6,6 +6,9 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+set encoding=utf-8
+set fileencoding=utf-8
+
 set wrap
 set linebreak
 set nolist
@@ -58,8 +61,11 @@ map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 
+" Change selected text to Title Case
+vmap gt :s/\%V\<\(\w\)\(\w*\)\>/\u\1\L\2/ge<cr>:noh<cr>
+
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
-autocmd FileType tex setlocal shiftwidth=4 tabstop=4
+autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
 autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 autocmd BufRead,BufNewFile *.ejs setlocal ft=html
