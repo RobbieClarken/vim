@@ -19,7 +19,6 @@ nmap <silent> <leader>s :set spell!<CR>
 
 cmap w!! w !sudo dd of=%
 colorscheme molokai
-syntax on
 set number
 
 set rtp+=~/.vim/bundle/vundle/
@@ -29,8 +28,11 @@ Bundle 'gmarik/vundle'
 Bundle 'pangloss/vim-javascript'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'walm/jshint.vim'
+Bundle 'RobbieClarken/vim-haproxy'
+Bundle 'plasticboy/vim-markdown'
 
 filetype plugin indent on
+syntax on
 
 set backspace=indent,eol,start    " Intuitive backspacing.
 
@@ -67,8 +69,9 @@ vmap gt :s/\%V\<\(\w\)\(\w*\)\>/\u\1\L\2/ge<cr>:noh<cr>
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
-autocmd BufRead,BufNewFile *.jade setlocal ft=jade
 autocmd BufRead,BufNewFile *.ejs setlocal ft=html
+
+let g:vim_markdown_folding_disabled=1
 
 " Fix tab completion for file names
 set wildmode=longest,list
