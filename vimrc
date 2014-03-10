@@ -30,6 +30,7 @@ Bundle 'digitaltoad/vim-jade'
 Bundle 'walm/jshint.vim'
 Bundle 'RobbieClarken/vim-haproxy'
 Bundle 'plasticboy/vim-markdown'
+Bundle 'triglav/vim-visual-increment'
 
 filetype plugin indent on
 syntax on
