@@ -25,6 +25,8 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
+Bundle 'kien/ctrlp.vim'
+Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'pangloss/vim-javascript'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'walm/jshint.vim'
