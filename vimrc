@@ -5,16 +5,16 @@ runtime macros/matchit.vim        " Enable jumping between opening and closing t
 filetype off                      " Required for vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'kien/ctrlp.vim'
-Bundle 'bronson/vim-trailing-whitespace'
-Bundle 'pangloss/vim-javascript'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'walm/jshint.vim'
-Bundle 'RobbieClarken/vim-haproxy'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'triglav/vim-visual-increment'
-Bundle 'tpope/vim-surround'
+Plugin 'gmarik/vundle'
+Plugin 'kien/ctrlp.vim'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'pangloss/vim-javascript'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'walm/jshint.vim'
+Plugin 'RobbieClarken/vim-haproxy'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'triglav/vim-visual-increment'
+Plugin 'tpope/vim-surround'
 let g:vim_markdown_folding_disabled=1
 filetype plugin indent on
 

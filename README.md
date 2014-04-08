@@ -4,7 +4,7 @@ Installation
 ```bash
 git clone --recursive https://github.com/RobbieClarken/vim ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
-vim +BundleInstall +qall
+vim +PluginInstall +qall
 ```
 
 Tips
