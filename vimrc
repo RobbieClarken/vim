@@ -1,29 +1,10 @@
-set nocompatible                  " use iMproved features
-filetype off                      " required for vundle
+set nocompatible                  " Use vim-only features
 
-set smartindent
-set tabstop=2
-set shiftwidth=2
-set expandtab
+runtime macros/matchit.vim        " Enable jumping between opening and closing tags with %
 
-set encoding=utf-8
-set fileencoding=utf-8
-
-set wrap
-set linebreak
-set nolist
-
-set spelllang=en_au               " Use Australian English
-" Turn spelling on and off
-nmap <silent> <leader>s :set spell!<CR>
-
-cmap w!! w !sudo dd of=%
-colorscheme molokai
-set number
-
+filetype off                      " Required for vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-
 Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
 Bundle 'bronson/vim-trailing-whitespace'
@@ -33,27 +14,50 @@ Bundle 'walm/jshint.vim'
 Bundle 'RobbieClarken/vim-haproxy'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'triglav/vim-visual-increment'
-
+Bundle 'tpope/vim-surround'
+let g:vim_markdown_folding_disabled=1
 filetype plugin indent on
-syntax on
 
+syntax on
+colorscheme molokai
+highlight Visual term=reverse cterm=reverse guibg=LightGrey
+
+set encoding=utf-8
+set fileencoding=utf-8
+set history=1000
+set spelllang=en_au               " Use Australian English.
+set clipboard=unnamed             " Allow putting from the Mac clipboard.
+set title                         " Set the terminal's title.
+
+set hidden                        " Don't warn when leaving a buffer with unsaved changes.
+set wildmenu                      " Enhanced command line completion.
+set wildmode=longest,list         " Fix tab completion for file names.
+set ignorecase                    " Case-insensitive searching.
+set smartcase                     " Case-sensitive if expression contains a capital letter.
+set hlsearch                      " Highlight matches.
+set incsearch                     " Highlight matches as you type.
+
+set smartindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set linebreak                     " Wrap lines at a sensible point.
 set backspace=indent,eol,start    " Intuitive backspacing.
 
-set hidden                        " Handle multiple buffers better.
+set number                        " Show line numbers.
+set laststatus=2                  " Always show the status line.
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-16(\ %l,%c-%v\ %)%P
 
-set wildmenu                      " Enhanced command line completion.
-set wildmode=list:longest         " Complete files like a shell.
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
+autocmd FileType tex setlocal shiftwidth=2 tabstop=2
+autocmd FileType js setlocal shiftwidth=2 tabstop=2
+autocmd BufRead,BufNewFile *.ejs setlocal ft=html
 
-set ignorecase                    " Case-insensitive searching.
-set smartcase                     " But case-sensitive if expression contains a capital letter.
+" Write with sudo
+cmap w!! w !sudo dd of=%
 
-set incsearch                     " Highlight matches as you type.
-set hlsearch                      " Highlight matches.
-
-set title                         " Set the terminal's title
-
-set laststatus=2                  " Show the status line all the time
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+" Turn spell-check on and off
+nmap <silent> <leader>s :set spell!<CR>
 
 " Tab mappings
 map <leader>tt :tabnew<cr>
@@ -66,17 +70,12 @@ map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 
-" Change selected text to Title Case
-vmap gt :s/\%V\<\(\w\)\(\w*\)\>/\u\1\L\2/ge<cr>:noh<cr>
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
 
-autocmd FileType python setlocal shiftwidth=4 tabstop=4
-autocmd FileType tex setlocal shiftwidth=2 tabstop=2
-autocmd FileType js setlocal shiftwidth=2 tabstop=2
-autocmd BufRead,BufNewFile *.ejs setlocal ft=html
-
-let g:vim_markdown_folding_disabled=1
-
-" Fix tab completion for file names
-set wildmode=longest,list
-
-set clipboard=unnamed
+" Disable backspace and delete buttons to train myself
+" to use <c-h>, and <c-w> and <c-u>.
+inoremap <BS> <Nop>
+inoremap <Del> <Nop>
