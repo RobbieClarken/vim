@@ -15,6 +15,7 @@ Plugin 'RobbieClarken/vim-haproxy'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'triglav/vim-visual-increment'
 Plugin 'tpope/vim-surround'
+Plugin 'nelstrom/vim-visual-star-search'
 let g:vim_markdown_folding_disabled=1
 filetype plugin indent on
 
@@ -74,6 +75,9 @@ nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
+
+" Clear search highlighting and redraw the screen
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " Disable backspace and delete buttons to train myself
 " to use <c-h>, and <c-w> and <c-u>.
