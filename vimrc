@@ -6,15 +6,16 @@ filetype off                      " Required for vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Plugin 'gmarik/vundle'
+Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'pangloss/vim-javascript'
 Plugin 'digitaltoad/vim-jade'
-Plugin 'walm/jshint.vim'
 Plugin 'RobbieClarken/vim-haproxy'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'triglav/vim-visual-increment'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-abolish'
 Plugin 'nelstrom/vim-visual-star-search'
 let g:vim_markdown_folding_disabled=1
 filetype plugin indent on
@@ -49,10 +50,13 @@ set number                        " Show line numbers.
 set laststatus=2                  " Always show the status line.
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-16(\ %l,%c-%v\ %)%P
 
+set tags=./.git/tags,./tags,tags
+
+autocmd BufRead,BufNewFile *.ejs set filetype=html
+autocmd BufRead,BufNewFile *.stt set filetype=c
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
-autocmd BufRead,BufNewFile *.ejs setlocal ft=html
 
 " Write with sudo
 cmap w!! w !sudo dd of=%
@@ -76,8 +80,16 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
 
-" Clear search highlighting and redraw the screen
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+" Clear search highlighting, turn off spell checking and redraw
+" the screen.
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
+
+" Make the & command preserve the substitution flags.
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+
+" %s/\v^([^:]+):\s*(.*)/"\1": "\2",/
 
 " Disable backspace and delete buttons to train myself
 " to use <c-h>, and <c-w> and <c-u>.
