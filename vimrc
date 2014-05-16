@@ -52,6 +52,8 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-16(\ %l,%c-%v\ %)%P
 
 set tags=./.git/tags,./tags,tags
 
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                      \| exe "normal! g'\"" | endif
 autocmd BufRead,BufNewFile *.ejs set filetype=html
 autocmd BufRead,BufNewFile *.stt set filetype=c
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
@@ -87,9 +89,6 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
-
-
-" %s/\v^([^:]+):\s*(.*)/"\1": "\2",/
 
 " Disable backspace and delete buttons to train myself
 " to use <c-h>, and <c-w> and <c-u>.
