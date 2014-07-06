@@ -52,6 +52,11 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-16(\ %l,%c-%v\ %)%P
 
 set tags=./.git/tags,./tags,tags
 
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
+  \ }
+
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
                       \| exe "normal! g'\"" | endif
 autocmd BufRead,BufNewFile *.ejs set filetype=html
