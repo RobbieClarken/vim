@@ -50,7 +50,7 @@ set number                        " Show line numbers.
 set laststatus=2                  " Always show the status line.
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-16(\ %l,%c-%v\ %)%P
 
-set tags=./.git/tags,./tags,tags
+set tags=./.git/tags,./tags,.git/tags,tags
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
