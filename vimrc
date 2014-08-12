@@ -8,6 +8,7 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'pangloss/vim-javascript'
 Plugin 'digitaltoad/vim-jade'
@@ -17,6 +18,8 @@ Plugin 'triglav/vim-visual-increment'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-abolish'
 Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'SirVer/ultisnips'
+Plugin 'tommcdo/vim-exchange'
 let g:vim_markdown_folding_disabled=1
 filetype plugin indent on
 
@@ -31,11 +34,13 @@ set spelllang=en_au               " Use Australian English.
 set clipboard=unnamed             " Allow putting from the Mac clipboard.
 set title                         " Set the terminal's title.
 
-set hidden                        " Don't warn when leaving a buffer with unsaved changes.
+set hidden                        " Don't warn when leaving a buffer
+                                  " with unsaved changes.
 set wildmenu                      " Enhanced command line completion.
 set wildmode=longest,list         " Fix tab completion for file names.
 set ignorecase                    " Case-insensitive searching.
-set smartcase                     " Case-sensitive if expression contains a capital letter.
+set smartcase                     " Case-sensitive if expression
+                                  " contains a capital letter.
 set hlsearch                      " Highlight matches.
 set incsearch                     " Highlight matches as you type.
 
@@ -70,22 +75,7 @@ cmap w!! w !sudo dd of=%
 
 " Turn spell-check on and off
 nmap <silent> <leader>s :set spell!<CR>
-
-" Tab mappings
-map <leader>tt :tabnew<cr>
-map <leader>te :tabedit
-map <leader>tc :tabclose<cr>
-map <leader>to :tabonly<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tN :tabprevious<cr>
-map <leader>tf :tabfirst<cr>
-map <leader>tl :tablast<cr>
-map <leader>tm :tabmove
-
-nnoremap <silent> [b :bprevious<CR>
-nnoremap <silent> ]b :bnext<CR>
-nnoremap <silent> [B :bfirst<CR>
-nnoremap <silent> ]B :blast<CR>
+nmap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" contains=@NoSpell<CR>
 
 " Clear search highlighting, turn off spell checking and redraw
 " the screen.
@@ -99,3 +89,5 @@ xnoremap & :&&<CR>
 " to use <c-h>, and <c-w> and <c-u>.
 inoremap <BS> <Nop>
 inoremap <Del> <Nop>
+
+nmap <CR> o<Esc>
