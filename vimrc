@@ -1,6 +1,7 @@
 set nocompatible                  " Use vim-only features
 
-runtime macros/matchit.vim        " Enable jumping between opening and closing tags with %
+runtime macros/matchit.vim        " Jump between opening and closing
+                                  " tags with %
 
 filetype off                      " Required for vundle
 set rtp+=~/.vim/bundle/vundle/
@@ -20,6 +21,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'SirVer/ultisnips'
 Plugin 'tommcdo/vim-exchange'
+Plugin 'atweiden/vim-dragvisuals'
 let g:vim_markdown_folding_disabled=1
 filetype plugin indent on
 
@@ -27,11 +29,15 @@ syntax on
 colorscheme molokai
 highlight Visual term=reverse cterm=reverse guibg=LightGrey
 
+set cursorline
+set colorcolumn=76
+set scrolloff=3
+
 set encoding=utf-8
 set fileencoding=utf-8
 set history=1000
 set spelllang=en_au               " Use Australian English.
-set clipboard=unnamed             " Allow putting from the Mac clipboard.
+set clipboard=unnamed             " Put from the Mac clipboard.
 set title                         " Set the terminal's title.
 
 set hidden                        " Don't warn when leaving a buffer
@@ -62,11 +68,13 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
 
+let g:pyindent_open_paren = '&sw'
+
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
                       \| exe "normal! g'\"" | endif
 autocmd BufRead,BufNewFile *.ejs set filetype=html
 autocmd BufRead,BufNewFile *.stt set filetype=c
-autocmd FileType python setlocal shiftwidth=4 tabstop=4
+autocmd BufRead,BufNewFile .bash_local set filetype=sh
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType js setlocal shiftwidth=2 tabstop=2
 
@@ -80,6 +88,8 @@ nmap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" cont
 " Clear search highlighting, turn off spell checking and redraw
 " the screen.
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
+
+nnoremap ; :
 
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
