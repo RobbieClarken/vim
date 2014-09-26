@@ -89,8 +89,6 @@ nmap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" cont
 " the screen.
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 
-nnoremap ; :
-
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
@@ -100,4 +98,5 @@ xnoremap & :&&<CR>
 inoremap <BS> <Nop>
 inoremap <Del> <Nop>
 
-nmap <CR> o<Esc>
+nnoremap <C-j> o<Esc>
+nnoremap <C-k> O<Esc>
