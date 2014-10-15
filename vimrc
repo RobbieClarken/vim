@@ -81,6 +81,7 @@ autocmd BufRead,BufNewFile .bash_local set filetype=sh
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
 autocmd FileType javascript let b:dispatch = 'node %'
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType python let b:dispatch = 'python %'
 
 " Write with sudo
