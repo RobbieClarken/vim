@@ -8,6 +8,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-dispatch'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'bronson/vim-trailing-whitespace'
@@ -50,6 +51,8 @@ set smartcase                     " Case-sensitive if expression
 set hlsearch                      " Highlight matches.
 set incsearch                     " Highlight matches as you type.
 
+set autoread
+set autowrite                     " Save before commands like :make
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -76,7 +79,9 @@ autocmd BufRead,BufNewFile *.ejs set filetype=html
 autocmd BufRead,BufNewFile *.stt set filetype=c
 autocmd BufRead,BufNewFile .bash_local set filetype=sh
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
-autocmd FileType js setlocal shiftwidth=2 tabstop=2
+autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
+autocmd FileType javascript let b:dispatch = 'node %'
+autocmd FileType python let b:dispatch = 'python %'
 
 " Write with sudo
 cmap w!! w !sudo dd of=%
@@ -89,14 +94,12 @@ nmap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" cont
 " the screen.
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 
+nmap <C-d> :Dispatch<CR>
+imap <C-d> <Esc>:Dispatch<CR>a
+
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
-
-" Disable backspace and delete buttons to train myself
-" to use <c-h>, and <c-w> and <c-u>.
-inoremap <BS> <Nop>
-inoremap <Del> <Nop>
 
 nnoremap <C-j> o<Esc>
 nnoremap <C-k> O<Esc>
