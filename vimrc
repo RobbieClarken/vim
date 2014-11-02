@@ -23,7 +23,8 @@ Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'SirVer/ultisnips'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'atweiden/vim-dragvisuals'
-let g:vim_markdown_folding_disabled=1
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'ervandew/supertab'
 filetype plugin indent on
 
 syntax on
@@ -70,8 +71,11 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
-
 let g:pyindent_open_paren = '&sw'
+let g:vim_markdown_folding_disabled = 1
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
                       \| exe "normal! g'\"" | endif
@@ -96,7 +100,7 @@ nmap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" cont
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 
 nmap <C-d> :Dispatch<CR>
-imap <C-d> <Esc>:Dispatch<CR>a
+imap <C-d> <Esc>:Dispatch<CR>
 
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
