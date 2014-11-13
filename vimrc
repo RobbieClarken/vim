@@ -82,6 +82,7 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 autocmd BufRead,BufNewFile *.ejs set filetype=html
 autocmd BufRead,BufNewFile *.stt set filetype=c
 autocmd BufRead,BufNewFile .bash_local set filetype=sh
+autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
 autocmd FileType javascript let b:dispatch = 'node %'
