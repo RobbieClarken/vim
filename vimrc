@@ -16,6 +16,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'RobbieClarken/vim-haproxy'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'Keithbsmiley/swift.vim'
 Plugin 'triglav/vim-visual-increment'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-abolish'
@@ -25,6 +26,7 @@ Plugin 'tommcdo/vim-exchange'
 Plugin 'atweiden/vim-dragvisuals'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'ervandew/supertab'
+Plugin 'junegunn/vim-easy-align'
 filetype plugin indent on
 
 syntax on
@@ -32,7 +34,7 @@ colorscheme molokai
 highlight Visual term=reverse cterm=reverse guibg=LightGrey
 
 set cursorline
-set colorcolumn=76
+set colorcolumn=78
 set scrolloff=3
 
 set encoding=utf-8
@@ -60,6 +62,7 @@ set shiftwidth=2
 set expandtab
 set linebreak                     " Wrap lines at a sensible point.
 set backspace=indent,eol,start    " Intuitive backspacing.
+set cm=blowfish2
 
 set number                        " Show line numbers.
 set laststatus=2                  " Always show the status line.
@@ -67,8 +70,11 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-16(\ %l,%c-%v\ %)%P
 
 set tags=./.git/tags,./tags,.git/tags,tags
 
+let mapleader=" "
+nnoremap <SPACE> <Nop>
+
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'dir':  '\v(/\.(git|hg|svn)|/node_modules|/coverage)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
 let g:pyindent_open_paren = '&sw'
@@ -86,6 +92,8 @@ autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
 autocmd FileType javascript let b:dispatch = 'node %'
+autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
+autocmd FileType javascript nnoremap <leader>c :!npm run-script coverage<CR>
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType python let b:dispatch = 'python %'
 
@@ -109,3 +117,9 @@ xnoremap & :&&<CR>
 
 nnoremap <C-j> o<Esc>
 nnoremap <C-k> O<Esc>
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
