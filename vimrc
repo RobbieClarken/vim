@@ -27,6 +27,7 @@ Plugin 'atweiden/vim-dragvisuals'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'ervandew/supertab'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'scrooloose/nerdcommenter'
 filetype plugin indent on
 
 syntax on
@@ -74,7 +75,7 @@ let mapleader=" "
 nnoremap <SPACE> <Nop>
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v(/\.(git|hg|svn)|/node_modules|/coverage)$',
+  \ 'dir':  '\v\C(/\.(git|hg|svn)|/node_modules|/coverage|/dbd?|O\..*)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
 let g:pyindent_open_paren = '&sw'
@@ -93,7 +94,6 @@ autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
 autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
-autocmd FileType javascript nnoremap <leader>c :!npm run-script coverage<CR>
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType python let b:dispatch = 'python %'
 
@@ -108,8 +108,7 @@ nmap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" cont
 " the screen.
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 
-nmap <C-d> :Dispatch<CR>
-imap <C-d> <Esc>:Dispatch<CR>
+nmap <leader>d :Dispatch<CR>
 
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
@@ -117,6 +116,9 @@ xnoremap & :&&<CR>
 
 nnoremap <C-j> o<Esc>
 nnoremap <C-k> O<Esc>
+
+" Prevent vim trying to paste last insert buffer when you hit <C-Space>
+imap <Nul> <Space>
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Enter> <Plug>(EasyAlign)
