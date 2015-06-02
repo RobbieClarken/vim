@@ -24,10 +24,10 @@ Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'SirVer/ultisnips'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'atweiden/vim-dragvisuals'
-Plugin 'Shougo/neocomplete.vim'
 Plugin 'ervandew/supertab'
 Plugin 'junegunn/vim-easy-align'
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-commentary'
+Plugin 'zaiste/tmux.vim'
 filetype plugin indent on
 
 syntax on
@@ -35,7 +35,7 @@ colorscheme molokai
 highlight Visual term=reverse cterm=reverse guibg=LightGrey
 
 set cursorline
-set colorcolumn=78
+set colorcolumn=82
 set scrolloff=3
 
 set encoding=utf-8
@@ -63,6 +63,7 @@ set shiftwidth=2
 set expandtab
 set linebreak                     " Wrap lines at a sensible point.
 set backspace=indent,eol,start    " Intuitive backspacing.
+set formatoptions-=cro            " Disable automatic comment continuation
 set cm=blowfish2
 
 set number                        " Show line numbers.
@@ -94,21 +95,30 @@ autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
 autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
+autocmd FileType javascript nnoremap <leader>r :!node --expose_gc %<CR>
+autocmd FileType json nnoremap <leader>t :!npm test<CR>
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType python let b:dispatch = 'python %'
+autocmd FileType python nnoremap <leader>r :!python %<cr>
+autocmd FileType mkd setlocal shiftwidth=2 tabstop=2
+autocmd FileType mkd nnoremap o A<CR>
+autocmd FileType * setlocal formatoptions-=cro
+
+inoremap jk <Esc>
+cnoremap jk <Esc>
 
 " Write with sudo
-cmap w!! w !sudo dd of=%
+cnoremap w!! w !sudo dd of=%
 
 " Turn spell-check on and off
-nmap <silent> <leader>s :set spell!<CR>
-nmap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" contains=@NoSpell<CR>
+nnoremap <silent> <leader>s :set spell!<CR>
+nnoremap <silent> <leader>n :syn match capitalLetters "\v<[a-zA-Z]_?[ijk0-9]?>" contains=@NoSpell<CR>
 
 " Clear search highlighting, turn off spell checking and redraw
 " the screen.
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 
-nmap <leader>d :Dispatch<CR>
+nnoremap <leader>d :Dispatch<CR>
 
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
@@ -118,10 +128,12 @@ nnoremap <C-j> o<Esc>
 nnoremap <C-k> O<Esc>
 
 " Prevent vim trying to paste last insert buffer when you hit <C-Space>
-imap <Nul> <Space>
+inoremap <Nul> <Space>
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
+vnoremap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+nnoremap ga <Plug>(EasyAlign)
+
+nnoremap <leader>w :%s/\v\s+$//<cr>
