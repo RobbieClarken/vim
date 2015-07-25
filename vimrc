@@ -12,7 +12,9 @@ Plugin 'tpope/vim-unimpaired'             " Handy bracket mappings
 Plugin 'tpope/vim-abolish'                " Change variable case format
 Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
-Plugin 'SirVer/ultisnips'                 " Code snippets manager
+if v:version >= 704
+  Plugin 'SirVer/ultisnips'               " Code snippets manager
+endif
 Plugin 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
 Plugin 'triglav/vim-visual-increment'     " Create column of ascending numbers
 Plugin 'nelstrom/vim-visual-star-search'  " * search from visual mode
@@ -90,7 +92,6 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
-
 " ===== Keyboard Shortcuts =====
 
 " Use jk to return to normal mode
@@ -121,6 +122,19 @@ nnoremap <leader>w :%s/\v\s+$//<CR>
 " screen.
 nnoremap <leader>l :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 
+" ------ Executing Scripts ------
+
+" Use <Space>r to execute scripts
+autocmd FileType javascript nnoremap <leader>r :!node --expose_gc %<CR>
+autocmd FileType python nnoremap <leader>r :!python %<CR>
+
+" ------ Running Tests ------
+
+" Use <Space>t to run tests
+autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
+autocmd FileType json nnoremap <leader>t :!npm test<CR>
+autocmd FileType python nnoremap <leader>t :!python -m unittest discover<CR>
+autocmd FileType python nnoremap <leader>u :!python manage.py test<CR>
 
 " ===== Plugin Configuration =====
 
@@ -143,8 +157,7 @@ autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType python let b:dispatch = 'python %'
 nnoremap <leader>d :Dispatch<CR>
 
-
-" ===== Special Filetype Configuration =====
+" ===== Filetype Configuration =====
 
 " Set filetypes of unmatched files
 autocmd BufRead,BufNewFile *.ejs set filetype=html
@@ -152,11 +165,6 @@ autocmd BufRead,BufNewFile *.stt set filetype=c
 autocmd BufRead,BufNewFile .bash_local set filetype=sh
 autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 
-autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
-autocmd FileType javascript nnoremap <leader>r :!node --expose_gc %<CR>
-autocmd FileType json nnoremap <leader>t :!npm test<CR>
+" Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
-autocmd FileType python nnoremap <leader>t :!python manage.py test<CR>
-autocmd FileType python nnoremap <leader>u :!python -m unittest discover<CR>
-autocmd FileType python nnoremap <leader>r :!python %<CR>
 autocmd FileType mkd nnoremap o A<CR>
