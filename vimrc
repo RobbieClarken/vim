@@ -31,6 +31,7 @@ Plugin 'RobbieClarken/vim-haproxy'        " HAProxy syntax support
 Plugin 'plasticboy/vim-markdown'          " Markdown syntax support
 Plugin 'keith/swift.vim'                  " Swift syntax support
 Plugin 'mxw/vim-jsx'                      " JSX syntax support
+Plugin 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 call vundle#end()                 " Finish putting plugins on the runtimepath
 filetype plugin on                " Enable loading plugins by filetype
 runtime macros/matchit.vim        " Jump between opening and closing xml tags with %
