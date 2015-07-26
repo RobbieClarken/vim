@@ -5,12 +5,14 @@ filetype off                      " Required for Vundle
 set runtimepath+=~/.vim/bundle/vundle/    " Tell Vim where to find Vundle
 call vundle#begin()                       " Enable the :Plugin command
 Plugin 'gmarik/vundle'                    " Let Vundle manage Vundle
-Plugin 'tomasr/molokai'
+Plugin 'tomasr/molokai'                   " Theme with nice bright colours
+Plugin 'bling/vim-airline'                " Better status line
 Plugin 'tpope/vim-repeat'                 " Add . support to plugin commands
 Plugin 'tpope/vim-surround'               " Change parentheses and quotes
 Plugin 'tpope/vim-unimpaired'             " Handy bracket mappings
 Plugin 'tpope/vim-abolish'                " Change variable case format
 Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
+Plugin 'tpope/vim-fugitive'               " Git support
 Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
 if v:version >= 704
   Plugin 'SirVer/ultisnips'               " Code snippets manager
@@ -36,7 +38,8 @@ runtime macros/matchit.vim        " Jump between opening and closing xml tags wi
 " ===== Set Styling =====
 
 syntax enable                     " Turn on syntax highlighting.
-" Use molokai colorscheme if it is available.
+set background=dark               " Use the dark variant of the colorscheme
+" Load molokai in a try/catch in case Vundle hasn't installed it yet
 try
   colorscheme molokai
 catch
@@ -50,7 +53,6 @@ set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
 set title                         " Set the terminal's title.
 set laststatus=2                  " Always show the status line.
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %=%-16(\ %l,%c-%v\ %)%P
 
 " ===== Configure Vim =====
 
@@ -114,6 +116,7 @@ nnoremap <silent> <leader>s :set spell!<CR>
 " Add a line above or below with <Space>k or <Space>j and stay in normal mode
 nnoremap <leader>j o<Esc>
 nnoremap <leader>k O<Esc>
+nnoremap <CR> o<Esc>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :%s/\v\s+$//<CR>
@@ -121,6 +124,9 @@ nnoremap <leader>w :%s/\v\s+$//<CR>
 " <Space>l to clear search highlighting, turn off spell checking and redraw the
 " screen.
 nnoremap <leader>l :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
+
+" Use <Space>d to run dispatch
+nnoremap <leader>d :Dispatch<CR>
 
 " ------ Executing Scripts ------
 
@@ -145,6 +151,11 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
 
+" ------ bling/vim-airline ------
+let g:airline_left_sep = ' »'
+let g:airline_right_sep = '« '
+let g:airline_theme='zenburn'
+
 " ------ plasticboy/vim-markdown.git ------
 let g:vim_markdown_folding_disabled = 1    " Disable folding
 
@@ -155,7 +166,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
 autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType python let b:dispatch = 'python %'
-nnoremap <leader>d :Dispatch<CR>
 
 " ===== Filetype Configuration =====
 
