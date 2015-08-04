@@ -103,6 +103,8 @@ xnoremap & :&&<CR>
 " Use jk to return to normal mode
 inoremap jk <Esc>
 cnoremap jk <Esc>
+inoremap JK <Esc>
+cnoremap JK <Esc>
 
 " Use space bar as leader key
 let mapleader=" "
