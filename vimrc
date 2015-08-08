@@ -14,6 +14,7 @@ Plugin 'tpope/vim-abolish'                " Change variable case format
 Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plugin 'tpope/vim-fugitive'               " Git support
 Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
+Plugin 'scrooloose/nerdtree'              " File explorer
 if v:version >= 704
   Plugin 'SirVer/ultisnips'               " Code snippets manager
 endif
@@ -79,6 +80,11 @@ set formatoptions-=cro            " Disable automatic comment continuation.
 set nrformats-=octal              " Make <C-a> behave sensibly for numbers with
                                   " leading zeros.
 set tags=./.git/tags,./tags,.git/tags,tags  " Where to find ctags file
+
+" Add folders that vimgrep shouldn't search
+set wildignore+=.venv/**
+set wildignore+=.git/**
+set wildignore+=node_modules/**
 
 " Use stronger encryption
 if v:version >= 704
@@ -147,6 +153,10 @@ autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType json nnoremap <leader>t :!npm test<CR>
 autocmd FileType python nnoremap <leader>t :!python -m unittest discover<CR>
 autocmd FileType python nnoremap <leader>u :!python manage.py test<CR>
+
+" ------ Opening Files ------
+
+autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 
 " ===== Plugin Configuration =====
 
