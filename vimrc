@@ -151,8 +151,7 @@ autocmd FileType python nnoremap <leader>r :!python %<CR>
 " Use <Space>t to run tests
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType json nnoremap <leader>t :!npm test<CR>
-autocmd FileType python nnoremap <leader>t :!python -m unittest discover<CR>
-autocmd FileType python nnoremap <leader>u :!python manage.py test<CR>
+autocmd FileType python nnoremap <leader>t :!py.test -v<CR>
 
 " ------ Opening Files ------
 
