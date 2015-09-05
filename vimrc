@@ -151,7 +151,7 @@ autocmd FileType python nnoremap <leader>r :!python %<CR>
 " Use <Space>t to run tests
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType json nnoremap <leader>t :!npm test<CR>
-autocmd FileType python nnoremap <leader>t :!py.test -v<CR>
+autocmd FileType python nnoremap <leader>t :!py.test -s -v<CR>
 
 " ------ Opening Files ------
 
@@ -162,10 +162,11 @@ autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 " ------ kien/ctrlp.vim ------
 " Files and folders we don't want CtrlP to match
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v\C(/\.(git|hg|svn)|/node_modules|/coverage|/dbd?|O\..*)$',
+  \ 'dir':  '\v\C(/\.(git|hg|svn)|/node_modules|/coverage|/dbd?|/tests/fixtures/cassettes|O\..*)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
-let  g:ctrlp_use_caching = 0
+let g:ctrlp_use_caching = 0
+let g:ctrlp_working_path_mode=0
 
 " ------ bling/vim-airline ------
 let g:airline_left_sep = ' »'
