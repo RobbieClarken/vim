@@ -1,15 +1,21 @@
-snippet des "mocha suite" m
+snippet describe "mocha suite" m
 describe('$1', () => {
 
-	$2
+	it('$2', () => {
+		$3
+	})
 
 })
 endsnippet
 
 snippet it "mocha test" m
 it('$1', () => {
-
 	$2
-
 })
+endsnippet
+
+snippet pure "PureRenderMixin for es6 classes"
+shouldComponentUpdate () {
+	return React.addons.PureRenderMixin.shouldComponentUpdate.apply(this, arguments)
+}
 endsnippet

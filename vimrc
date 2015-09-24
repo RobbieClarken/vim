@@ -14,7 +14,6 @@ Plugin 'tpope/vim-abolish'                " Change variable case format
 Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plugin 'tpope/vim-fugitive'               " Git support
 Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
-Plugin 'scrooloose/nerdtree'              " File explorer
 if v:version >= 704
   Plugin 'SirVer/ultisnips'               " Code snippets manager
 endif
@@ -80,11 +79,13 @@ set formatoptions-=cro            " Disable automatic comment continuation.
 set nrformats-=octal              " Make <C-a> behave sensibly for numbers with
                                   " leading zeros.
 set tags=./.git/tags,./tags,.git/tags,tags  " Where to find ctags file
+set diffopt+=vertical             " Use vertical splits for viewing diffs
 
 " Add folders that vimgrep shouldn't search
 set wildignore+=.venv/**
 set wildignore+=.git/**
 set wildignore+=node_modules/**
+set wildignore+=dist/**
 
 " Use stronger encryption
 if v:version >= 704
@@ -122,13 +123,15 @@ inoremap <Nul> <Space>
 " Write with sudo
 cnoremap w!! w !sudo dd of=%
 
+" Ctrl-o in insert mode to insert a line above
+inoremap <C-o> <Esc>O
+
 " Turn spell-check on and off
 nnoremap <silent> <leader>s :set spell!<CR>
 
 " Add a line above or below with <Space>k or <Space>j and stay in normal mode
 nnoremap <leader>j o<Esc>
 nnoremap <leader>k O<Esc>
-" nnoremap <CR> o<Esc>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :%s/\v\s+$//<CR>
@@ -186,6 +189,9 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
 autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType python let b:dispatch = 'python %'
+
+" ------ mxw/vim-jsx ------
+let g:jsx_ext_required = 0
 
 " ===== Filetype Configuration =====
 
