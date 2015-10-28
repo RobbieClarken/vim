@@ -33,6 +33,7 @@ Plugin 'plasticboy/vim-markdown'          " Markdown syntax support
 Plugin 'keith/swift.vim'                  " Swift syntax support
 Plugin 'mxw/vim-jsx'                      " JSX syntax support
 Plugin 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
+Plugin 'lervag/vimtex'                    " LaTeX syntax support
 call vundle#end()                 " Finish putting plugins on the runtimepath
 filetype plugin indent on         " Enable loading plugins by filetype
 runtime macros/matchit.vim        " Jump between opening and closing xml tags with %
@@ -83,9 +84,11 @@ set diffopt+=vertical             " Use vertical splits for viewing diffs
 
 " Add folders that vimgrep shouldn't search
 set wildignore+=.venv/**
+set wildignore+=.venv3/**
 set wildignore+=.git/**
 set wildignore+=node_modules/**
 set wildignore+=dist/**
+set wildignore+=coverage/**
 
 " Use stronger encryption
 if v:version >= 704
