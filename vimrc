@@ -150,7 +150,7 @@ nnoremap <leader>d :Dispatch<CR>
 
 " Use <Space>r to execute scripts
 autocmd FileType javascript nnoremap <leader>r :!node --expose_gc %<CR>
-autocmd FileType python nnoremap <leader>r :!python %<CR>
+autocmd FileType python nnoremap <leader>r :!python3 %<CR>
 
 " ------ Running Tests ------
 
