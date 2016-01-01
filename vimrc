@@ -81,6 +81,7 @@ set nrformats-=octal              " Make <C-a> behave sensibly for numbers with
                                   " leading zeros.
 set tags=./.git/tags,./tags,.git/tags,tags  " Where to find ctags file
 set diffopt+=vertical             " Use vertical splits for viewing diffs
+set splitbelow                    " Make git status windows appear at the bottom
 
 " Add folders that vimgrep shouldn't search
 set wildignore+=.venv/**
@@ -129,7 +130,13 @@ cnoremap w!! w !sudo dd of=%
 " Ctrl-o in insert mode to insert a line above
 inoremap <C-o> <Esc>O
 
+nnoremap <leader><left> :vertical resize +10<cr>
+nnoremap <leader><right> :vertical resize -10<cr>
+nnoremap <leader><down> :resize +5<cr>
+nnoremap <leader><up> :resize -5<cr>
+
 " Turn spell-check on and off
+
 nnoremap <silent> <leader>s :set spell!<CR>
 
 " Add a line above or below with <Space>k or <Space>j and stay in normal mode
