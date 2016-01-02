@@ -132,8 +132,8 @@ inoremap <C-o> <Esc>O
 
 nnoremap <leader><left> :vertical resize +10<cr>
 nnoremap <leader><right> :vertical resize -10<cr>
-nnoremap <leader><down> :resize +5<cr>
-nnoremap <leader><up> :resize -5<cr>
+nnoremap <leader><up> :resize +5<cr>
+nnoremap <leader><down> :resize -5<cr>
 
 " Turn spell-check on and off
 
