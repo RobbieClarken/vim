@@ -81,7 +81,9 @@ set nrformats-=octal              " Make <C-a> behave sensibly for numbers with
                                   " leading zeros.
 set tags=./.git/tags,./tags,.git/tags,tags  " Where to find ctags file
 set diffopt+=vertical             " Use vertical splits for viewing diffs
-set splitbelow                    " Make git status windows appear at the bottom
+set splitbelow                    " Make horizontal splits (eg Gstatus) appear at
+                                  " the bottom
+set splitright                    " Make new vertical splits appear on the right
 
 " Add folders that vimgrep shouldn't search
 set wildignore+=.venv/**
@@ -90,6 +92,7 @@ set wildignore+=.git/**
 set wildignore+=node_modules/**
 set wildignore+=dist/**
 set wildignore+=coverage/**
+set wildignore+=**.pyc
 
 " Use stronger encryption
 if v:version >= 704
@@ -164,7 +167,7 @@ autocmd FileType python nnoremap <leader>r :!python3 %<CR>
 " Use <Space>t to run tests
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType json nnoremap <leader>t :!npm test<CR>
-autocmd FileType python nnoremap <leader>t :!py.test -s -v<CR>
+autocmd FileType python nnoremap <leader>t :!py.test -v<CR>
 
 " ------ Opening Files ------
 
