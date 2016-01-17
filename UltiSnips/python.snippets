@@ -15,3 +15,20 @@ snippet interact
 from code import interact
 interact(local=locals())
 endsnippet
+
+snippet setup
+from setuptools import setup
+import re
+
+with open('$1/__init__.py') as file:
+    version = re.search(r"__version__ = '(.*)'", file.read()).group(1)
+
+setup(
+    name='$1',
+    version=version,
+    packages=['$1'],
+    install_requires=[
+        $0
+    ],
+)
+endsnippet

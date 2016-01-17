@@ -14,6 +14,7 @@ Plugin 'tpope/vim-abolish'                " Change variable case format
 Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plugin 'tpope/vim-fugitive'               " Git support
 Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
+" Plugin 'mhinz/vim-startify'
 if v:version >= 704
   Plugin 'SirVer/ultisnips'               " Code snippets manager
 endif
@@ -216,6 +217,7 @@ autocmd BufRead,BufNewFile *.ejs set filetype=html
 autocmd BufRead,BufNewFile *.stt set filetype=c
 autocmd BufRead,BufNewFile .bash_local set filetype=sh
 autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+autocmd BufRead,BufNewFile *.sls set filetype=yaml
 
 " Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
