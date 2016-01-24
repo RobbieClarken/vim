@@ -1,0 +1,8 @@
+snippet tox
+[tox]
+envlist = py27,py35
+
+[testenv]
+deps = pytest
+commands = py.test --junitxml=junit-{envname}.xml
+endsnippet
