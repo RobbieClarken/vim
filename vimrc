@@ -96,7 +96,7 @@ set wildignore+=coverage/**
 set wildignore+=**.pyc
 
 " Use stronger encryption
-if v:version >= 704
+if has("patch-7.4.399")
   set cryptmethod=blowfish2
 else
   set cryptmethod=blowfish
