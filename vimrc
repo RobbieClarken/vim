@@ -49,6 +49,7 @@ try
 catch
 endtry
 set relativenumber                " Show relative line numbers.
+set number                        " Also show current line number.
 set cursorline                    " Highlight line the cursor is on.
 set colorcolumn=82                " Indicate the 82nd column to help avoid.
                                   " writing excessively long lines of code.
@@ -94,6 +95,8 @@ set wildignore+=node_modules/**
 set wildignore+=dist/**
 set wildignore+=coverage/**
 set wildignore+=**.pyc
+set wildignore+=*.egg-info/**
+set wildignore+=tmp/**
 
 " Use stronger encryption
 if has("patch-7.4.399")
@@ -134,6 +137,8 @@ cnoremap w!! w !sudo dd of=%
 " Ctrl-o in insert mode to insert a line above
 inoremap <C-o> <Esc>O
 
+nnoremap <leader>v :source ~/.vimrc<cr>
+
 nnoremap <leader><left> :vertical resize +10<cr>
 nnoremap <leader><right> :vertical resize -10<cr>
 nnoremap <leader><up> :resize +5<cr>
@@ -169,6 +174,10 @@ autocmd FileType python nnoremap <leader>r :!python3 %<CR>
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType json nnoremap <leader>t :!npm test<CR>
 autocmd FileType python nnoremap <leader>t :!py.test -v<CR>
+autocmd FileType ruby nnoremap <leader>t :!rake<CR>
+
+" Use <Space>T to test individual modules
+autocmd FileType python nnoremap <leader>T :!py.test %<cr>
 
 " ------ Opening Files ------
 
@@ -179,7 +188,7 @@ autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 " ------ kien/ctrlp.vim ------
 " Files and folders we don't want CtrlP to match
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v\C(/\.(git|hg|svn)|/node_modules|/coverage|/dbd?|/tests/fixtures/cassettes|O\..*)$',
+  \ 'dir':  '\v\C(/\.(git|hg|svn)|/tmp|/node_modules|/coverage|O\..*)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
 let g:ctrlp_use_caching = 0
