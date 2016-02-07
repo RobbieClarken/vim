@@ -95,6 +95,7 @@ set wildignore+=node_modules/**
 set wildignore+=dist/**
 set wildignore+=coverage/**
 set wildignore+=**.pyc
+set wildignore+=**.ipynb
 set wildignore+=*.egg-info/**
 set wildignore+=tmp/**
 
@@ -178,6 +179,7 @@ autocmd FileType ruby nnoremap <leader>t :!rake<CR>
 
 " Use <Space>T to test individual modules
 autocmd FileType python nnoremap <leader>T :!py.test %<cr>
+autocmd FileType javascript nnoremap <leader>T :!node_modules/.bin/mocha --compilers js:babel-core/register %<cr>
 
 " ------ Opening Files ------
 
@@ -209,7 +211,7 @@ let g:vim_markdown_folding_disabled = 1    " Disable folding
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " ------ tpope/vim-dispatch ------
-autocmd FileType tex let b:dispatch = 'latexmk -pdf %'
+autocmd FileType tex let b:dispatch = 'xelatex %'
 autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType python let b:dispatch = 'python %'
 
