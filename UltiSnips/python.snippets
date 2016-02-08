@@ -64,3 +64,10 @@ snippet sleep
 import time
 time.sleep(3)
 endsnippet
+
+snippet vcr
+from vcr import VCR
+
+
+vcr = VCR(cassette_library_dir='tests/fixtures/cassettes')
+endsnippet
