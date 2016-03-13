@@ -14,7 +14,6 @@ Plugin 'tpope/vim-abolish'                " Change variable case format
 Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plugin 'tpope/vim-fugitive'               " Git support
 Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
-" Plugin 'mhinz/vim-startify'
 if v:version >= 704
   Plugin 'SirVer/ultisnips'               " Code snippets manager
 endif
@@ -23,7 +22,6 @@ Plugin 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
 Plugin 'triglav/vim-visual-increment'     " Create column of ascending numbers
 Plugin 'nelstrom/vim-visual-star-search'  " * search from visual mode
 Plugin 'tommcdo/vim-exchange'             " Swap regions of text
-Plugin 'ervandew/supertab'                " Tab-completion
 Plugin 'junegunn/vim-easy-align'          " Align tabular data
 Plugin 'tpope/vim-commentary'             " Comment / uncomment code
 Plugin 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
