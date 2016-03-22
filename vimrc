@@ -25,10 +25,10 @@ Plugin 'tommcdo/vim-exchange'             " Swap regions of text
 Plugin 'junegunn/vim-easy-align'          " Align tabular data
 Plugin 'tpope/vim-commentary'             " Comment / uncomment code
 Plugin 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
+Plugin 'nvie/vim-flake8'                  " Run flake8 on python files
 Plugin 'pangloss/vim-javascript'          " JavaScript syntax support
 Plugin 'digitaltoad/vim-jade'             " Jade syntax support
 Plugin 'RobbieClarken/vim-haproxy'        " HAProxy syntax support
-Plugin 'plasticboy/vim-markdown'          " Markdown syntax support
 Plugin 'keith/swift.vim'                  " Swift syntax support
 Plugin 'mxw/vim-jsx'                      " JSX syntax support
 Plugin 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
@@ -136,12 +136,12 @@ cnoremap w!! w !sudo dd of=%
 " Ctrl-o in insert mode to insert a line above
 inoremap <C-o> <Esc>O
 
-nnoremap <leader>v :source ~/.vimrc<cr>
+nnoremap <leader>v :source ~/.vimrc<CR>
 
-nnoremap <leader><left> :vertical resize +10<cr>
-nnoremap <leader><right> :vertical resize -10<cr>
-nnoremap <leader><up> :resize +5<cr>
-nnoremap <leader><down> :resize -5<cr>
+nnoremap <leader><left> :vertical resize +10<CR>
+nnoremap <leader><right> :vertical resize -10<CR>
+nnoremap <leader><up> :resize +5<CR>
+nnoremap <leader><down> :resize -5<CR>
 
 " Turn spell-check on and off
 
@@ -176,8 +176,12 @@ autocmd FileType python nnoremap <leader>t :!py.test -v<CR>
 autocmd FileType ruby nnoremap <leader>t :!rake<CR>
 
 " Use <Space>T to test individual modules
-autocmd FileType python nnoremap <leader>T :!py.test %<cr>
-autocmd FileType javascript nnoremap <leader>T :!node_modules/.bin/mocha --compilers js:babel-core/register %<cr>
+autocmd FileType python nnoremap <leader>T :!py.test %<CR>
+autocmd FileType javascript nnoremap <leader>T :!node_modules/.bin/mocha --compilers js:babel-core/register %<CR>
+
+" ------ Linting ------
+
+autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
 
 " ------ Opening Files ------
 
@@ -188,7 +192,7 @@ autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 " ------ kien/ctrlp.vim ------
 " Files and folders we don't want CtrlP to match
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v\C(/\.(git|hg|svn)|/tmp|/node_modules|/coverage|O\..*)$',
+  \ 'dir':  '\v\C(/\.(git|hg|svn)|/tmp|/tests/fixtures|/node_modules|/coverage|O\..*)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
   \ }
 let g:ctrlp_use_caching = 0
@@ -202,16 +206,11 @@ let g:airline_theme='zenburn'
 " ------ embear/vim-localvimrc ------
 let g:localvimrc_persistent = 1
 
-" ------ plasticboy/vim-markdown.git ------
-let g:vim_markdown_folding_disabled = 1    " Disable folding
-
-" ------ ervandew/supertab ------
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
 " ------ tpope/vim-dispatch ------
 autocmd FileType tex let b:dispatch = 'xelatex %'
 autocmd FileType javascript let b:dispatch = 'node %'
-autocmd FileType python let b:dispatch = 'python %'
+autocmd FileType python let b:dispatch = 'py.test -v'
+autocmd FileType markdown let b:dispatch = 'pandoc % -o %:r.pdf'
 
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
@@ -231,3 +230,4 @@ autocmd BufRead,BufNewFile *.sls set filetype=yaml
 " Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType mkd nnoremap o A<CR>
+autocmd FileType markdown set textwidth=80

@@ -69,7 +69,7 @@ snippet vcr
 from vcr import VCR
 
 
-vcr = VCR(cassette_library_dir='tests/fixtures/cassettes')
+vcr = VCR(cassette_library_dir='tests/fixtures/cassettes', record_mode='new_episodes')
 endsnippet
 
 snippet dt

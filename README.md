@@ -18,6 +18,13 @@ For a non-greedy search, use `{-}` instead of `*`. For example, the following wi
 /\v"(.{-})"
 ```
 
+### Swapping panes
+
+```vim
+<C-w>L
+<C-w>J
+```
+
 ### Typing unicode characters
 
 ```vim
