@@ -6,7 +6,8 @@ set runtimepath+=~/.vim/bundle/vundle/    " Tell Vim where to find Vundle
 call vundle#begin()                       " Enable the :Plugin command
 Plugin 'gmarik/vundle'                    " Let Vundle manage Vundle
 Plugin 'tomasr/molokai'                   " Theme with nice bright colours
-Plugin 'bling/vim-airline'                " Better status line
+Plugin 'vim-airline/vim-airline'          " Better status line
+Plugin 'vim-airline/vim-airline-themes'   " Themes for vim-airline
 Plugin 'tpope/vim-repeat'                 " Add . support to plugin commands
 Plugin 'tpope/vim-surround'               " Change parentheses and quotes
 Plugin 'tpope/vim-unimpaired'             " Handy bracket mappings
@@ -198,7 +199,7 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_use_caching = 0
 let g:ctrlp_working_path_mode=0
 
-" ------ bling/vim-airline ------
+" ------ vim-airline/vim-airline ------
 let g:airline_left_sep = ' »'
 let g:airline_right_sep = '« '
 let g:airline_theme='zenburn'
