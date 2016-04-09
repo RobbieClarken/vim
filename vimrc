@@ -34,6 +34,7 @@ Plugin 'keith/swift.vim'                  " Swift syntax support
 Plugin 'mxw/vim-jsx'                      " JSX syntax support
 Plugin 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plugin 'lervag/vimtex'                    " LaTeX syntax support
+Plugin 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 call vundle#end()                 " Finish putting plugins on the runtimepath
 filetype plugin indent on         " Enable loading plugins by filetype
 runtime macros/matchit.vim        " Jump between opening and closing xml tags with %
@@ -212,6 +213,7 @@ autocmd FileType tex let b:dispatch = 'xelatex %'
 autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType python let b:dispatch = 'py.test -v'
 autocmd FileType markdown let b:dispatch = 'pandoc % -o %:r.pdf'
+autocmd FileType dot let b:dispatch = 'dot -T pdf -o %:r.pdf %'
 
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
