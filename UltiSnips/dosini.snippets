@@ -1,8 +1,15 @@
 snippet tox
 [tox]
-envlist = py27,py35
+envlist = py35
 
 [testenv]
-deps = pytest
-commands = py.test --junitxml=junit-{envname}.xml
+deps =
+  pytest
+  flake8
+commands =
+  py.test
+  flake8
+
+[flake8]
+max-line-length = 84
 endsnippet

@@ -98,6 +98,7 @@ set wildignore+=**.pyc
 set wildignore+=**.ipynb
 set wildignore+=*.egg-info/**
 set wildignore+=tmp/**
+set wildignore+=docs/_build/**
 
 " Use stronger encryption
 if has("patch-7.4.399")
@@ -194,9 +195,18 @@ autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 " ------ kien/ctrlp.vim ------
 " Files and folders we don't want CtrlP to match
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v\C(/\.(git|hg|svn)|/tmp|/tests/fixtures|/node_modules|/coverage|O\..*)$',
+  \ 'dir':  '\v\C(
+            \/\.(git|hg|svn)
+            \|/tmp
+            \|/tests/fixtures
+            \|/node_modules
+            \|/coverage
+            \|/(db|dbd)
+            \|/bin/darwin-x86
+            \|O\..*
+            \)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
-  \ }
+\ }
 let g:ctrlp_use_caching = 0
 let g:ctrlp_working_path_mode=0
 
@@ -214,6 +224,7 @@ autocmd FileType javascript let b:dispatch = 'node %'
 autocmd FileType python let b:dispatch = 'py.test -v'
 autocmd FileType markdown let b:dispatch = 'pandoc % -o %:r.pdf'
 autocmd FileType dot let b:dispatch = 'dot -T pdf -o %:r.pdf %'
+autocmd FileType rst let b:dispatch = 'make html'
 
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
