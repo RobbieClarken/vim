@@ -99,6 +99,8 @@ set wildignore+=**.ipynb
 set wildignore+=*.egg-info/**
 set wildignore+=tmp/**
 set wildignore+=docs/_build/**
+set wildignore+=db/**
+set wildignore+=dbd/**
 
 " Use stronger encryption
 if has("patch-7.4.399")
