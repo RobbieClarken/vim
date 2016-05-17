@@ -15,6 +15,7 @@ Plugin 'tpope/vim-abolish'                " Change variable case format
 Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plugin 'tpope/vim-fugitive'               " Git support
 Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
+Plugin 'rizzatti/dash.vim'                " Enable quick access to docs in Dash
 if v:version >= 704
   Plugin 'SirVer/ultisnips'               " Code snippets manager
 endif
@@ -78,6 +79,7 @@ set tabstop=2                     " Replace tab with 2 spaces.
 set shiftwidth=2                  " Make > command indent by 2 spaces.
 set linebreak                     " Wrap lines at a sensible point.
 set backspace=indent,eol,start    " Intuitive backspacing.
+set nojoinspaces                  " Joining sentences should only insert 1 space.
 set formatoptions-=cro            " Disable automatic comment continuation.
 set nrformats-=octal              " Make <C-a> behave sensibly for numbers with
                                   " leading zeros.
@@ -165,6 +167,9 @@ nnoremap <leader>l :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 
 " Use <Space>d to run dispatch
 nnoremap <leader>d :Dispatch<CR>
+
+" Use K to search for keyword under cursor in Dash
+nnoremap K :Dash<CR>
 
 " ------ Executing Scripts ------
 
