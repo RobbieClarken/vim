@@ -79,3 +79,20 @@ endsnippet
 snippet dt
 from datetime import datetime
 endsnippet
+
+snippet entry
+entry_points={
+    'console_scripts': [
+        '$1',
+    ],
+},$0
+endsnippet
+
+snippet log
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+log.addHandler(handler)
+endsnippet
