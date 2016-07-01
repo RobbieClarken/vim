@@ -168,9 +168,6 @@ nnoremap <leader>l :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
 " Use <Space>d to run dispatch
 nnoremap <leader>d :Dispatch<CR>
 
-" Use K to search for keyword under cursor in Dash
-nnoremap K :Dash<CR>
-
 " ------ Executing Scripts ------
 
 " Use <Space>r to execute scripts
@@ -188,6 +185,9 @@ autocmd FileType ruby nnoremap <leader>t :!rake<CR>
 " Use <Space>T to test individual modules
 autocmd FileType python nnoremap <leader>T :!py.test %<CR>
 autocmd FileType javascript nnoremap <leader>T :!node_modules/.bin/mocha --compilers js:babel-core/register %<CR>
+
+" Underline current line with equals signs (for rst headings)
+nnoremap <leader>= YpVr=
 
 " ------ Linting ------
 
@@ -232,6 +232,7 @@ autocmd FileType python let b:dispatch = 'py.test -v'
 autocmd FileType markdown let b:dispatch = 'pandoc % -o %:r.pdf'
 autocmd FileType dot let b:dispatch = 'dot -T pdf -o %:r.pdf %'
 autocmd FileType rst let b:dispatch = 'make html'
+autocmd VimEnter * if @% == 'conf.py' | let b:dispatch = 'make html' | endif
 
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
@@ -247,8 +248,10 @@ autocmd BufRead,BufNewFile *.stt set filetype=c
 autocmd BufRead,BufNewFile .bash_local set filetype=sh
 autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 autocmd BufRead,BufNewFile *.sls set filetype=yaml
+autocmd BufRead,BufNewFile *.dockerfile set filetype=dockerfile
 
 " Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType mkd nnoremap o A<CR>
 autocmd FileType markdown set textwidth=80
+autocmd FileType rst setlocal shiftwidth=3 tabstop=3
