@@ -1,42 +1,40 @@
+set nocompatible                  " Use Vim-only features
+
 " ===== Load Plugins =====
 
-set nocompatible                  " Use Vim-only features
-filetype off                      " Required for Vundle
-set runtimepath+=~/.vim/bundle/vundle/    " Tell Vim where to find Vundle
-call vundle#begin()                       " Enable the :Plugin command
-Plugin 'gmarik/vundle'                    " Let Vundle manage Vundle
-Plugin 'tomasr/molokai'                   " Theme with nice bright colours
-Plugin 'vim-airline/vim-airline'          " Better status line
-Plugin 'vim-airline/vim-airline-themes'   " Themes for vim-airline
-Plugin 'tpope/vim-repeat'                 " Add . support to plugin commands
-Plugin 'tpope/vim-surround'               " Change parentheses and quotes
-Plugin 'tpope/vim-unimpaired'             " Handy bracket mappings
-Plugin 'tpope/vim-abolish'                " Change variable case format
-Plugin 'tpope/vim-dispatch'               " Asynchronous build dispatcher
-Plugin 'tpope/vim-fugitive'               " Git support
-Plugin 'kien/ctrlp.vim'                   " Fuzzy file finder
-Plugin 'rizzatti/dash.vim'                " Enable quick access to docs in Dash
-if v:version >= 704
-  Plugin 'SirVer/ultisnips'               " Code snippets manager
-endif
-Plugin 'embear/vim-localvimrc'            " Look for additional .lvimrc files
-Plugin 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
-Plugin 'triglav/vim-visual-increment'     " Create column of ascending numbers
-Plugin 'nelstrom/vim-visual-star-search'  " * search from visual mode
-Plugin 'tommcdo/vim-exchange'             " Swap regions of text
-Plugin 'junegunn/vim-easy-align'          " Align tabular data
-Plugin 'tpope/vim-commentary'             " Comment / uncomment code
-Plugin 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
-Plugin 'nvie/vim-flake8'                  " Run flake8 on python files
-Plugin 'pangloss/vim-javascript'          " JavaScript syntax support
-Plugin 'digitaltoad/vim-jade'             " Jade syntax support
-Plugin 'RobbieClarken/vim-haproxy'        " HAProxy syntax support
-Plugin 'keith/swift.vim'                  " Swift syntax support
-Plugin 'mxw/vim-jsx'                      " JSX syntax support
-Plugin 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
-Plugin 'lervag/vimtex'                    " LaTeX syntax support
-Plugin 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
-call vundle#end()                 " Finish putting plugins on the runtimepath
+call plug#begin('~/.vim/plugged')
+Plug 'gmarik/vundle'                    " Let Vundle manage Vundle
+Plug 'tomasr/molokai'                   " Theme with nice bright colours
+Plug 'vim-airline/vim-airline'          " Better status line
+Plug 'vim-airline/vim-airline-themes'   " Themes for vim-airline
+Plug 'tpope/vim-repeat'                 " Add . support to plugin commands
+Plug 'tpope/vim-surround'               " Change parentheses and quotes
+Plug 'tpope/vim-unimpaired'             " Handy bracket mappings
+Plug 'tpope/vim-abolish'                " Change variable case format
+Plug 'tpope/vim-dispatch'               " Asynchronous build dispatcher
+Plug 'tpope/vim-fugitive'               " Git support
+Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
+Plug 'rizzatti/dash.vim'                " Enable quick access to docs in Dash
+Plug 'SirVer/ultisnips'                 " Code snippets manager
+Plug 'embear/vim-localvimrc'            " Look for additional .lvimrc files
+Plug 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
+Plug 'triglav/vim-visual-increment'     " Create column of ascending numbers
+Plug 'nelstrom/vim-visual-star-search'  " * search from visual mode
+Plug 'tommcdo/vim-exchange'             " Swap regions of text
+Plug 'junegunn/vim-easy-align'          " Align tabular data
+Plug 'tpope/vim-commentary'             " Comment / uncomment code
+Plug 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
+Plug 'nvie/vim-flake8'                  " Run flake8 on python files
+Plug 'pangloss/vim-javascript'          " JavaScript syntax support
+Plug 'digitaltoad/vim-jade'             " Jade syntax support
+Plug 'RobbieClarken/vim-haproxy'        " HAProxy syntax support
+Plug 'keith/swift.vim'                  " Swift syntax support
+Plug 'mxw/vim-jsx'                      " JSX syntax support
+Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
+Plug 'lervag/vimtex'                    " LaTeX syntax support
+Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
+call plug#end()
+
 filetype plugin indent on         " Enable loading plugins by filetype
 runtime macros/matchit.vim        " Jump between opening and closing xml tags with %
 

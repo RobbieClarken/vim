@@ -2,9 +2,9 @@ Installation
 ------------
 
 ```bash
-git clone --recursive https://github.com/RobbieClarken/vim ~/.vim
+git clone https://github.com/RobbieClarken/vim ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
-vim +PluginInstall +qall
+vim +PlugInstall +qall
 ```
 
 Tips
