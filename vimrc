@@ -3,7 +3,6 @@ set nocompatible                  " Use Vim-only features
 " ===== Load Plugins =====
 
 call plug#begin('~/.vim/plugged')
-Plug 'gmarik/vundle'                    " Let Vundle manage Vundle
 Plug 'tomasr/molokai'                   " Theme with nice bright colours
 Plug 'vim-airline/vim-airline'          " Better status line
 Plug 'vim-airline/vim-airline-themes'   " Themes for vim-airline
@@ -33,6 +32,7 @@ Plug 'mxw/vim-jsx'                      " JSX syntax support
 Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plug 'lervag/vimtex'                    " LaTeX syntax support
 Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
+Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
@@ -101,6 +101,8 @@ set wildignore+=tmp/**
 set wildignore+=docs/_build/**
 set wildignore+=db/**
 set wildignore+=dbd/**
+set wildignore+=vendor/**
+set wildignore+=temp/**
 
 " Use stronger encryption
 if has("patch-7.4.399")
@@ -135,6 +137,9 @@ nnoremap <Space> <Nop>
 " Prevent vim trying to paste last insert buffer when you hit <C-Space>
 inoremap <Nul> <Space>
 
+" Alternate buffers
+nnoremap <leader><leader> <c-^>
+
 " Write with sudo
 cnoremap w!! w !sudo dd of=%
 
@@ -157,7 +162,7 @@ nnoremap <leader>j o<Esc>
 nnoremap <leader>k O<Esc>
 
 " Delete trailing white space with <Space>w
-nnoremap <leader>w :%s/\v\s+$//<CR>
+nnoremap <leader>w :%s/\v\s+$// \| :nohl<CR>
 
 " <Space>l to clear search highlighting, turn off spell checking and redraw the
 " screen.
@@ -171,14 +176,16 @@ nnoremap <leader>d :Dispatch<CR>
 " Use <Space>r to execute scripts
 autocmd FileType javascript nnoremap <leader>r :!node --expose_gc %<CR>
 autocmd FileType python nnoremap <leader>r :!python3 %<CR>
+autocmd FileType sh nnoremap <leader>r :!/bin/bash %<CR>
 
 " ------ Running Tests ------
 
 " Use <Space>t to run tests
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType json nnoremap <leader>t :!npm test<CR>
-autocmd FileType python nnoremap <leader>t :!py.test -v<CR>
-autocmd FileType ruby nnoremap <leader>t :!rake<CR>
+autocmd FileType python nnoremap <leader>t :!py.test -m 'not slow' -v<CR>
+autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
+autocmd FileType cucumber nnoremap <leader>t :!py.test -v<CR>
 
 " Use <Space>T to test individual modules
 autocmd FileType python nnoremap <leader>T :!py.test %<CR>
@@ -209,6 +216,8 @@ let g:ctrlp_custom_ignore = {
             \|/(db|dbd)
             \|/bin/darwin-x86
             \|O\..*
+            \|vendor
+            \|temp
             \)$',
   \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
 \ }
@@ -252,4 +261,9 @@ autocmd BufRead,BufNewFile *.dockerfile set filetype=dockerfile
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType mkd nnoremap o A<CR>
 autocmd FileType markdown set textwidth=80
-autocmd FileType rst setlocal shiftwidth=3 tabstop=3
+autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=80
+autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
+
+let maplocalleader = "\\"
+
+iabbrev teh the
