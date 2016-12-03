@@ -3,7 +3,6 @@ set nocompatible                  " Use Vim-only features
 " ===== Load Plugins =====
 
 call plug#begin('~/.vim/plugged')
-Plug 'tomasr/molokai'                   " Theme with nice bright colours
 Plug 'vim-airline/vim-airline'          " Better status line
 Plug 'vim-airline/vim-airline-themes'   " Themes for vim-airline
 Plug 'tpope/vim-repeat'                 " Add . support to plugin commands
@@ -13,21 +12,14 @@ Plug 'tpope/vim-abolish'                " Change variable case format
 Plug 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plug 'tpope/vim-fugitive'               " Git support
 Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
-Plug 'rizzatti/dash.vim'                " Enable quick access to docs in Dash
 Plug 'SirVer/ultisnips'                 " Code snippets manager
-Plug 'embear/vim-localvimrc'            " Look for additional .lvimrc files
 Plug 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
 Plug 'triglav/vim-visual-increment'     " Create column of ascending numbers
-Plug 'nelstrom/vim-visual-star-search'  " * search from visual mode
 Plug 'tommcdo/vim-exchange'             " Swap regions of text
-Plug 'junegunn/vim-easy-align'          " Align tabular data
 Plug 'tpope/vim-commentary'             " Comment / uncomment code
 Plug 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
 Plug 'nvie/vim-flake8'                  " Run flake8 on python files
 Plug 'pangloss/vim-javascript'          " JavaScript syntax support
-Plug 'digitaltoad/vim-jade'             " Jade syntax support
-Plug 'RobbieClarken/vim-haproxy'        " HAProxy syntax support
-Plug 'keith/swift.vim'                  " Swift syntax support
 Plug 'mxw/vim-jsx'                      " JSX syntax support
 Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plug 'lervag/vimtex'                    " LaTeX syntax support
@@ -40,23 +32,18 @@ runtime macros/matchit.vim        " Jump between opening and closing xml tags wi
 
 " ===== Set Styling =====
 
+set t_Co=256
 syntax enable                     " Turn on syntax highlighting.
-set background=dark               " Use the dark variant of the colorscheme
-" Load molokai in a try/catch in case Vundle hasn't installed it yet
-try
-  colorscheme molokai
-catch
-endtry
 set relativenumber                " Show relative line numbers.
 set number                        " Also show current line number.
 set cursorline                    " Highlight line the cursor is on.
 set colorcolumn=82                " Indicate the 82nd column to help avoid.
                                   " writing excessively long lines of code.
-set scrolloff=3                   " Always display at least 3 lines above cursor.
 set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
 set title                         " Set the terminal's title.
 set laststatus=2                  " Always show the status line.
+highlight ColorColumn ctermbg=240
 
 " ===== Configure Vim =====
 
@@ -81,7 +68,6 @@ set nojoinspaces                  " Joining sentences should only insert 1 space
 set formatoptions-=cro            " Disable automatic comment continuation.
 set nrformats-=octal              " Make <C-a> behave sensibly for numbers with
                                   " leading zeros.
-set tags=./.git/tags,./tags,.git/tags,tags  " Where to find ctags file
 set diffopt+=vertical             " Use vertical splits for viewing diffs
 set splitbelow                    " Make horizontal splits (eg Gstatus) appear at
                                   " the bottom
@@ -127,8 +113,6 @@ xnoremap & :&&<CR>
 " Use jk to return to normal mode
 inoremap jk <Esc>
 cnoremap jk <Esc>
-inoremap JK <Esc>
-cnoremap JK <Esc>
 
 " Use space bar as leader key
 let mapleader=" "
@@ -156,10 +140,6 @@ nnoremap <leader><down> :resize -5<CR>
 " Turn spell-check on and off
 
 nnoremap <silent> <leader>s :set spell!<CR>
-
-" Add a line above or below with <Space>k or <Space>j and stay in normal mode
-nnoremap <leader>j o<Esc>
-nnoremap <leader>k O<Esc>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :%s/\v\s+$// \| :nohl<CR>
@@ -227,10 +207,7 @@ let g:ctrlp_working_path_mode=0
 " ------ vim-airline/vim-airline ------
 let g:airline_left_sep = ' »'
 let g:airline_right_sep = '« '
-let g:airline_theme='zenburn'
-
-" ------ embear/vim-localvimrc ------
-let g:localvimrc_persistent = 1
+let g:airline_theme='bubblegum'
 
 " ------ tpope/vim-dispatch ------
 autocmd FileType tex let b:dispatch = 'xelatex %'
