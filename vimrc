@@ -32,18 +32,18 @@ runtime macros/matchit.vim        " Jump between opening and closing xml tags wi
 
 " ===== Set Styling =====
 
-set t_Co=256
+set t_Co=256                      " Use 256 colors
 syntax enable                     " Turn on syntax highlighting.
 set relativenumber                " Show relative line numbers.
 set number                        " Also show current line number.
-set cursorline                    " Highlight line the cursor is on.
 set colorcolumn=82                " Indicate the 82nd column to help avoid.
                                   " writing excessively long lines of code.
 set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
 set title                         " Set the terminal's title.
 set laststatus=2                  " Always show the status line.
-highlight ColorColumn ctermbg=240
+
+highlight ColorColumn ctermbg=236
 
 " ===== Configure Vim =====
 
@@ -73,9 +73,10 @@ set splitbelow                    " Make horizontal splits (eg Gstatus) appear a
                                   " the bottom
 set splitright                    " Make new vertical splits appear on the right
 
+set path+=**                      " Make :find look in subdirectories
+
 " Add folders that vimgrep shouldn't search
 set wildignore+=.venv/**
-set wildignore+=.venv3/**
 set wildignore+=.git/**
 set wildignore+=node_modules/**
 set wildignore+=dist/**
@@ -136,6 +137,9 @@ nnoremap <leader><left> :vertical resize +10<CR>
 nnoremap <leader><right> :vertical resize -10<CR>
 nnoremap <leader><up> :resize +5<CR>
 nnoremap <leader><down> :resize -5<CR>
+
+" Generate ctags
+nnoremap <leader>] :silent execute '!ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
 
 " Turn spell-check on and off
 
@@ -237,7 +241,7 @@ autocmd BufRead,BufNewFile *.dockerfile set filetype=dockerfile
 " Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType mkd nnoremap o A<CR>
-autocmd FileType markdown set textwidth=80
+autocmd FileType markdown set textwidth=90
 autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=80
 autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
 
