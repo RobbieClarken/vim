@@ -7,7 +7,7 @@ Plug 'vim-airline/vim-airline'          " Better status line
 Plug 'vim-airline/vim-airline-themes'   " Themes for vim-airline
 Plug 'tpope/vim-repeat'                 " Add . support to plugin commands
 Plug 'tpope/vim-surround'               " Change parentheses and quotes
-Plug 'tpope/vim-unimpaired'             " Handy bracket mappings
+Plug 'tpope/vim-unimpaired'             " Handy bracket mappings (see :help unimpaired)
 Plug 'tpope/vim-abolish'                " Change variable case format
 Plug 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plug 'tpope/vim-fugitive'               " Git support
@@ -25,10 +25,12 @@ Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plug 'lervag/vimtex'                    " LaTeX syntax support
 Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
+Plug 'dhruvasagar/vim-table-mode'       " Awesome markdown table editing
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
 runtime macros/matchit.vim        " Jump between opening and closing xml tags with %
+
 
 " ===== Set Styling =====
 
@@ -42,8 +44,10 @@ set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
 set title                         " Set the terminal's title.
 set laststatus=2                  " Always show the status line.
+set listchars=eol:¬,tab:▸\        " Pretty characters for tab and end of line
 
 highlight ColorColumn ctermbg=236
+
 
 " ===== Configure Vim =====
 
@@ -90,6 +94,10 @@ set wildignore+=db/**
 set wildignore+=dbd/**
 set wildignore+=vendor/**
 set wildignore+=temp/**
+set wildignore+=tags
+
+" Prevent ins-completion from looking in node_modules
+set complete-=i
 
 " Use stronger encryption
 if has("patch-7.4.399")
@@ -108,6 +116,7 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
+
 
 " ===== Keyboard Shortcuts =====
 
@@ -141,16 +150,11 @@ nnoremap <leader><down> :resize -5<CR>
 " Generate ctags
 nnoremap <leader>] :silent execute '!ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
 
-" Turn spell-check on and off
-
-nnoremap <silent> <leader>s :set spell!<CR>
-
 " Delete trailing white space with <Space>w
-nnoremap <leader>w :%s/\v\s+$// \| :nohl<CR>
+nnoremap <leader>W :%s/\v\s+$// \| :nohlsearch<CR>
 
-" <Space>l to clear search highlighting, turn off spell checking and redraw the
-" screen.
-nnoremap <leader>l :<C-u>nohlsearch<CR>:set nospell<CR><C-l>
+" <Space>l to clear search highlighting, turn off spell checking and redraw the screen.
+nnoremap <leader>l :nohlsearch \| set nospell<CR><C-l>
 
 " Use <Space>d to run dispatch
 nnoremap <leader>d :Dispatch<CR>
@@ -166,14 +170,16 @@ autocmd FileType sh nnoremap <leader>r :!/bin/bash %<CR>
 
 " Use <Space>t to run tests
 autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
-autocmd FileType json nnoremap <leader>t :!npm test<CR>
-autocmd FileType python nnoremap <leader>t :!py.test -m 'not slow' -v<CR>
+autocmd FileType python nnoremap <leader>t :!pytest -m 'not slow' -v --tb=short tests/<CR>
 autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
-autocmd FileType cucumber nnoremap <leader>t :!py.test -v<CR>
+autocmd FileType cucumber nnoremap <leader>t :!pytest -v<CR>
 
 " Use <Space>T to test individual modules
-autocmd FileType python nnoremap <leader>T :!py.test %<CR>
-autocmd FileType javascript nnoremap <leader>T :!node_modules/.bin/mocha --compilers js:babel-core/register %<CR>
+autocmd FileType python nnoremap <leader>T :!pytest -m 'not slow' -v --tb=short %<CR>
+autocmd FileType javascript nnoremap <leader>T :!./node_modules/.bin/mocha --compilers js:babel-core/register --require ./tests/helper.js %<CR>
+
+" Use <Space>w to test wip tests
+autocmd FileType python nnoremap <leader>w :!pytest -m wip -v --tb=short tests/<CR>
 
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
@@ -186,6 +192,7 @@ autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
 
 autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 
+
 " ===== Plugin Configuration =====
 
 " ------ kien/ctrlp.vim ------
@@ -194,7 +201,6 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v\C(
             \/\.(git|hg|svn)
             \|/tmp
-            \|/tests/fixtures
             \|/node_modules
             \|/coverage
             \|/(db|dbd)
@@ -213,17 +219,14 @@ let g:airline_left_sep = ' »'
 let g:airline_right_sep = '« '
 let g:airline_theme='bubblegum'
 
-" ------ tpope/vim-dispatch ------
-autocmd FileType tex let b:dispatch = 'xelatex %'
-autocmd FileType javascript let b:dispatch = 'node %'
-autocmd FileType python let b:dispatch = 'py.test -v'
-autocmd FileType markdown let b:dispatch = 'pandoc % -o %:r.pdf'
-autocmd FileType dot let b:dispatch = 'dot -T pdf -o %:r.pdf %'
-autocmd FileType rst let b:dispatch = 'make html'
-autocmd VimEnter * if @% == 'conf.py' | let b:dispatch = 'make html' | endif
-
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
+
+" ------ dhruvasagar/vim-table-mode ------
+" activate table mode with <Leader>mm to avoid colision with test shortcut
+let g:table_mode_map_prefix = '<Leader>m'
+let g:table_mode_corner="|"
+
 
 " ===== Filetype Configuration =====
 
@@ -242,8 +245,9 @@ autocmd BufRead,BufNewFile *.dockerfile set filetype=dockerfile
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType mkd nnoremap o A<CR>
 autocmd FileType markdown set textwidth=90
-autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=80
+autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=94
 autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
+autocmd FileType php setlocal shiftwidth=4 tabstop=4
 
 let maplocalleader = "\\"
 
