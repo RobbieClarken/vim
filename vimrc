@@ -26,6 +26,9 @@ Plug 'lervag/vimtex'                    " LaTeX syntax support
 Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
 Plug 'dhruvasagar/vim-table-mode'       " Awesome markdown table editing
+Plug 'vim-scripts/ReplaceWithRegister'  " use grr
+Plug 'w0rp/ale'                         " Asynchronous linter
+Plug 'vimwiki/vimwiki'                  " Personal wiki
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
@@ -95,6 +98,7 @@ set wildignore+=dbd/**
 set wildignore+=vendor/**
 set wildignore+=temp/**
 set wildignore+=tags
+set wildignore+=**.class
 
 " Prevent ins-completion from looking in node_modules
 set complete-=i
@@ -151,7 +155,7 @@ nnoremap <leader><down> :resize -5<CR>
 nnoremap <leader>] :silent execute '!ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
 
 " Delete trailing white space with <Space>w
-nnoremap <leader>W :%s/\v\s+$// \| :nohlsearch<CR>
+nnoremap <leader>s :%s/\v\s+$// \| :nohlsearch<CR>
 
 " <Space>l to clear search highlighting, turn off spell checking and redraw the screen.
 nnoremap <leader>l :nohlsearch \| set nospell<CR><C-l>
@@ -165,6 +169,7 @@ nnoremap <leader>d :Dispatch<CR>
 autocmd FileType javascript nnoremap <leader>r :!node --expose_gc %<CR>
 autocmd FileType python nnoremap <leader>r :!python3 %<CR>
 autocmd FileType sh nnoremap <leader>r :!/bin/bash %<CR>
+autocmd FileType java nnoremap <leader>r :!javac % && java %:r<CR>
 
 " ------ Running Tests ------
 
@@ -173,6 +178,7 @@ autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType python nnoremap <leader>t :!pytest -m 'not slow' -v --tb=short tests/<CR>
 autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
 autocmd FileType cucumber nnoremap <leader>t :!pytest -v<CR>
+autocmd FileType cpp nnoremap <leader>t :!make test && ./test -c<CR>
 
 " Use <Space>T to test individual modules
 autocmd FileType python nnoremap <leader>T :!pytest -m 'not slow' -v --tb=short %<CR>
@@ -180,6 +186,7 @@ autocmd FileType javascript nnoremap <leader>T :!./node_modules/.bin/mocha --com
 
 " Use <Space>w to test wip tests
 autocmd FileType python nnoremap <leader>w :!pytest -m wip -v --tb=short tests/<CR>
+autocmd FileType python nnoremap <leader>W :!pytest -m wip -v --tb=short %<CR>
 
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
@@ -187,6 +194,7 @@ nnoremap <leader>= YpVr=
 " ------ Linting ------
 
 autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
+autocmd FileType javascript nnoremap <leader>f :!yarn eslint %<cr>
 
 " ------ Opening Files ------
 
@@ -227,6 +235,12 @@ let g:jsx_ext_required = 0
 let g:table_mode_map_prefix = '<Leader>m'
 let g:table_mode_corner="|"
 
+" ----- w0rp/ale -----
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_open_list = 1
+let g:ale_python_mypy_options = '--ignore-missing-imports'
+
 
 " ===== Filetype Configuration =====
 
@@ -252,3 +266,6 @@ autocmd FileType php setlocal shiftwidth=4 tabstop=4
 let maplocalleader = "\\"
 
 iabbrev teh the
+
+highlight Comment cterm=italic
+highlight Type cterm=italic
