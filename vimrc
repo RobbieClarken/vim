@@ -103,13 +103,6 @@ set wildignore+=**.class
 " Prevent ins-completion from looking in node_modules
 set complete-=i
 
-" Use stronger encryption
-if has("patch-7.4.399")
-  set cryptmethod=blowfish2
-else
-  set cryptmethod=blowfish
-endif
-
 " Disable automatic comment continuation
 autocmd FileType * setlocal formatoptions-=cro
 
@@ -269,3 +262,8 @@ iabbrev teh the
 
 highlight Comment cterm=italic
 highlight Type cterm=italic
+
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
