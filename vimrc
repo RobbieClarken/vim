@@ -234,6 +234,9 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_open_list = 1
 let g:ale_python_mypy_options = '--ignore-missing-imports'
 
+" ----- vimwiki/vimwiki -----
+let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
+
 
 " ===== Filetype Configuration =====
 
