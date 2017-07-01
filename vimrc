@@ -25,7 +25,6 @@ Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plug 'lervag/vimtex'                    " LaTeX syntax support
 Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
-Plug 'dhruvasagar/vim-table-mode'       " Awesome markdown table editing
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
@@ -175,18 +174,23 @@ autocmd FileType cpp nnoremap <leader>t :!make test && ./test -c<CR>
 
 " Use <Space>T to test individual modules
 autocmd FileType python nnoremap <leader>T :!pytest -m 'not slow' -v --tb=short %<CR>
-autocmd FileType javascript nnoremap <leader>T :!./node_modules/.bin/mocha --compilers js:babel-core/register --require ./tests/helper.js %<CR>
+autocmd FileType javascript nnoremap <leader>T :!NODE_ENV=test yarn run mocha -- --compilers js:babel-core/register --require ./tests/frontend/helper.js %<cr>
 
 " Use <Space>w to test wip tests
 autocmd FileType python nnoremap <leader>w :!pytest -m wip -v --tb=short tests/<CR>
 autocmd FileType python nnoremap <leader>W :!pytest -m wip -v --tb=short %<CR>
+
+autocmd FileType php nnoremap <leader>t :!phpunit -c tests/phpunit.xml --color tests/unit/<CR>
+autocmd FileType php nnoremap <leader>T :!phpunit -c tests/phpunit.xml --color %<CR>
+autocmd FileType php nnoremap <leader>w :!phpunit -c tests/phpunit.xml --group wip --color tests/unit/<CR>
+autocmd FileType php nnoremap <leader>W :!phpunit -c tests/phpunit.xml --group wip --color %<CR>
 
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
 
 " ------ Linting ------
 
-autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
+autocmd FileType python nnoremap <leader>f :call ALELint()<CR>
 autocmd FileType javascript nnoremap <leader>f :!yarn eslint %<cr>
 
 " ------ Opening Files ------
@@ -237,6 +241,8 @@ let g:ale_python_mypy_options = '--ignore-missing-imports'
 " ----- vimwiki/vimwiki -----
 let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
 
+" ----- SirVer/ultisnips -----
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
 
 " ===== Filetype Configuration =====
 
