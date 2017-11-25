@@ -8,6 +8,7 @@ if __name__ == '__main__':
 	$0
 endsnippet
 
+
 snippet skip
 @unittest.skip('BLOCK_COMMIT: Remove before committing')
 endsnippet
@@ -88,8 +89,17 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
 endsnippet
 
+
 snippet pdb
 import pdb
+pdb.set_trace()
+endsnippet
+
+
+snippet qpdb
+import pdb
+from PyQt5.QtCore import pyqtRemoveInputHook
+pyqtRemoveInputHook()
 pdb.set_trace()
 endsnippet
 
@@ -112,4 +122,19 @@ endsnippet
 
 snippet pt
 import pytest  # noqa
+endsnippet
+
+snippet loop
+loop = asyncio.get_event_loop()
+endsnippet
+
+
+snippet qt
+from PyQt5.QtWidgets import QWidget, QApplication
+
+
+app = QApplication([])
+widget = QWidget()
+widget.show()
+app.exec_()
 endsnippet
