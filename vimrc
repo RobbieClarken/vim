@@ -3,6 +3,7 @@ set nocompatible                  " Use Vim-only features
 " ===== Load Plugins =====
 
 call plug#begin('~/.vim/plugged')
+
 Plug 'vim-airline/vim-airline'          " Better status line
 Plug 'vim-airline/vim-airline-themes'   " Themes for vim-airline
 Plug 'tpope/vim-repeat'                 " Add . support to plugin commands
@@ -11,7 +12,8 @@ Plug 'tpope/vim-unimpaired'             " Handy bracket mappings (see :help unim
 Plug 'tpope/vim-abolish'                " Change variable case format
 Plug 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plug 'tpope/vim-fugitive'               " Git support
-Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  " Install fzf
+Plug 'junegunn/fzf.vim'                 " Fuzzy find files with ctrl-p
 Plug 'SirVer/ultisnips'                 " Code snippets manager
 Plug 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
 Plug 'triglav/vim-visual-increment'     " Create column of ascending numbers
@@ -28,6 +30,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
+Plug 'Vimjas/vim-python-pep8-indent'    " PEP8 indentation
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
@@ -38,10 +41,8 @@ runtime macros/matchit.vim        " Jump between opening and closing xml tags wi
 
 set t_Co=256                      " Use 256 colors
 syntax enable                     " Turn on syntax highlighting.
-set relativenumber                " Show relative line numbers.
 set number                        " Also show current line number.
-set colorcolumn=82                " Indicate the 82nd column to help avoid.
-                                  " writing excessively long lines of code.
+set colorcolumn=90                " Discourage excessively long lines of code.
 set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
 set title                         " Set the terminal's title.
@@ -133,9 +134,6 @@ nnoremap <leader><leader> <c-^>
 " Write with sudo
 cnoremap w!! w !sudo dd of=%
 
-" Ctrl-o in insert mode to insert a line above
-inoremap <C-o> <Esc>O
-
 nnoremap <leader>v :source ~/.vimrc<CR>
 
 nnoremap <leader><left> :vertical resize +10<CR>
@@ -145,6 +143,7 @@ nnoremap <leader><down> :resize -5<CR>
 
 " Generate ctags
 nnoremap <leader>] :silent execute '!ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
+autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>s :%s/\v\s+$// \| :nohlsearch<CR>
@@ -174,11 +173,10 @@ autocmd FileType cpp nnoremap <leader>t :!make test && ./test -c<CR>
 
 " Use <Space>T to test individual modules
 autocmd FileType python nnoremap <leader>T :!pytest -m 'not slow' -v --tb=short %<CR>
-autocmd FileType javascript nnoremap <leader>T :!NODE_ENV=test yarn run mocha -- --compilers js:babel-core/register --require ./tests/frontend/helper.js %<cr>
 
 " Use <Space>w to test wip tests
-autocmd FileType python nnoremap <leader>w :!pytest -m wip -v --tb=short tests/<CR>
-autocmd FileType python nnoremap <leader>W :!pytest -m wip -v --tb=short %<CR>
+autocmd FileType python nnoremap <leader>w :!pytest -m wip -v -s --tb=short tests/<CR>
+autocmd FileType python nnoremap <leader>W :!pytest -m wip -v -s --tb=short %<CR>
 
 autocmd FileType php nnoremap <leader>t :!phpunit -c tests/phpunit.xml --color tests/unit/<CR>
 autocmd FileType php nnoremap <leader>T :!phpunit -c tests/phpunit.xml --color %<CR>
@@ -188,36 +186,28 @@ autocmd FileType php nnoremap <leader>W :!phpunit -c tests/phpunit.xml --group w
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
 
-" ------ Linting ------
-
-autocmd FileType python nnoremap <leader>f :call ALELint()<CR>
-autocmd FileType javascript nnoremap <leader>f :!yarn eslint %<cr>
+autocmd FileType python nnoremap <leader>f :!pytest -v --lf<CR>
 
 " ------ Opening Files ------
 
 autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 
+" ------ grepping -----
+
+if executable("rg")
+  set grepprg=rg\ -S\ --vimgrep\ --no-heading
+  set grepformat=%f:%l:%c:%m
+endif
+
+command -nargs=+ -complete=file -bar Rg silent! grep <args>|redraw!
 
 " ===== Plugin Configuration =====
 
-" ------ kien/ctrlp.vim ------
-" Files and folders we don't want CtrlP to match
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v\C(
-            \/\.(git|hg|svn)
-            \|/tmp
-            \|/node_modules
-            \|/coverage
-            \|/(db|dbd)
-            \|/bin/darwin-x86
-            \|O\..*
-            \|vendor
-            \|temp
-            \)$',
-  \ 'file': '\v\.(exe|so|dll|pyc|png|jpg|gif)$',
-\ }
-let g:ctrlp_use_caching = 0
-let g:ctrlp_working_path_mode=0
+" ------ junegunn/fzf.vim ------
+nnoremap <C-p> :Files<cr>
+
+" ------ lervag/vimtex ------
+let g:vimtex_view_method='skim'
 
 " ------ vim-airline/vim-airline ------
 let g:airline_left_sep = ' »'
@@ -227,22 +217,21 @@ let g:airline_theme='bubblegum'
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
 
-" ------ dhruvasagar/vim-table-mode ------
-" activate table mode with <Leader>mm to avoid colision with test shortcut
-let g:table_mode_map_prefix = '<Leader>m'
-let g:table_mode_corner="|"
-
 " ----- w0rp/ale -----
+
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_open_list = 1
 let g:ale_python_mypy_options = '--ignore-missing-imports'
+" Fix rendering issues:
+nnoremap <leader>a :ALEDisable<cr> \| :ALEEnable<cr>
 
 " ----- vimwiki/vimwiki -----
 let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " ----- SirVer/ultisnips -----
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
+
 
 " ===== Filetype Configuration =====
 
@@ -256,6 +245,9 @@ autocmd BufRead,BufNewFile .bash_local set filetype=sh
 autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 autocmd BufRead,BufNewFile *.sls set filetype=yaml
 autocmd BufRead,BufNewFile *.dockerfile set filetype=dockerfile
+autocmd BufRead,BufNewFile wscript set filetype=python
+autocmd BufRead,BufNewFile *.spec set filetype=python
+autocmd BufRead,BufNewFile .eslintrc set filetype=yaml
 
 " Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
@@ -264,10 +256,10 @@ autocmd FileType markdown set textwidth=90
 autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=94
 autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
 autocmd FileType php setlocal shiftwidth=4 tabstop=4
+autocmd FileType crontab setlocal commentstring=#\ %s
+autocmd FileType expect setlocal commentstring=#\ %s
 
-let maplocalleader = "\\"
-
-iabbrev teh the
+" Style
 
 highlight Comment cterm=italic
 highlight Type cterm=italic
