@@ -20,7 +20,6 @@ Plug 'triglav/vim-visual-increment'     " Create column of ascending numbers
 Plug 'tommcdo/vim-exchange'             " Swap regions of text
 Plug 'tpope/vim-commentary'             " Comment / uncomment code
 Plug 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
-Plug 'nvie/vim-flake8'                  " Run flake8 on python files
 Plug 'pangloss/vim-javascript'          " JavaScript syntax support
 Plug 'mxw/vim-jsx'                      " JSX syntax support
 Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
@@ -31,11 +30,11 @@ Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
 Plug 'Vimjas/vim-python-pep8-indent'    " PEP8 indentation
+Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realtime
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
 runtime macros/matchit.vim        " Jump between opening and closing xml tags with %
-
 
 " ===== Set Styling =====
 
