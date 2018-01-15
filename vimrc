@@ -3,22 +3,21 @@ set nocompatible                  " Use Vim-only features
 " ===== Load Plugins =====
 
 call plug#begin('~/.vim/plugged')
-
 Plug 'vim-airline/vim-airline'          " Better status line
 Plug 'vim-airline/vim-airline-themes'   " Themes for vim-airline
 Plug 'tpope/vim-repeat'                 " Add . support to plugin commands
 Plug 'tpope/vim-surround'               " Change parentheses and quotes
 Plug 'tpope/vim-unimpaired'             " Handy bracket mappings (see :help unimpaired)
 Plug 'tpope/vim-abolish'                " Change variable case format
-Plug 'tpope/vim-dispatch'               " Asynchronous build dispatcher
 Plug 'tpope/vim-fugitive'               " Git support
+Plug 'tpope/vim-projectionist'          " Switching from test file to implementation file
+Plug 'tpope/vim-commentary'             " Comment / uncomment code
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  " Install fzf
 Plug 'junegunn/fzf.vim'                 " Fuzzy find files with ctrl-p
 Plug 'SirVer/ultisnips'                 " Code snippets manager
 Plug 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
 Plug 'triglav/vim-visual-increment'     " Create column of ascending numbers
 Plug 'tommcdo/vim-exchange'             " Swap regions of text
-Plug 'tpope/vim-commentary'             " Comment / uncomment code
 Plug 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
 Plug 'pangloss/vim-javascript'          " JavaScript syntax support
 Plug 'mxw/vim-jsx'                      " JSX syntax support
@@ -31,6 +30,7 @@ Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
 Plug 'Vimjas/vim-python-pep8-indent'    " PEP8 indentation
 Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realtime
+Plug 'chriskempson/base16-vim'          " base16 themes
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
@@ -40,7 +40,7 @@ runtime macros/matchit.vim        " Jump between opening and closing xml tags wi
 
 set t_Co=256                      " Use 256 colors
 syntax enable                     " Turn on syntax highlighting.
-set number                        " Also show current line number.
+set number                        " Show current line number.
 set colorcolumn=90                " Discourage excessively long lines of code.
 set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
@@ -48,8 +48,15 @@ set title                         " Set the terminal's title.
 set laststatus=2                  " Always show the status line.
 set listchars=eol:¬,tab:▸\        " Pretty characters for tab and end of line
 
-highlight ColorColumn ctermbg=236
+" Use base16
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
+highlight ColorColumn ctermbg=236
+highlight Comment cterm=italic
+highlight Type cterm=italic
 
 " ===== Configure Vim =====
 
@@ -72,14 +79,25 @@ set linebreak                     " Wrap lines at a sensible point.
 set backspace=indent,eol,start    " Intuitive backspacing.
 set nojoinspaces                  " Joining sentences should only insert 1 space.
 set formatoptions-=cro            " Disable automatic comment continuation.
-set nrformats-=octal              " Make <C-a> behave sensibly for numbers with
-                                  " leading zeros.
+set nrformats-=octal              " Make <C-a> behave sensibly for numbers with leading zeros.
 set diffopt+=vertical             " Use vertical splits for viewing diffs
-set splitbelow                    " Make horizontal splits (eg Gstatus) appear at
-                                  " the bottom
+set splitbelow                    " Make horizontal splits (eg Gstatus) appear at the bottom
 set splitright                    " Make new vertical splits appear on the right
-
 set path+=**                      " Make :find look in subdirectories
+
+" Redraw when rim is resized
+autocmd VimResized * execute "normal! \<c-w>="
+
+" Enable mouse support in all modes
+set mouse+=a
+
+if has("mouse_sgr")
+  " Fix mouse support for columns greater than 223
+  set ttymouse=sgr
+elseif has("mouse_xterm")
+  " Use faster mouse handling
+  set ttymouse=xterm2
+end
 
 " Add folders that vimgrep shouldn't search
 set wildignore+=.venv/**
@@ -113,12 +131,33 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
+" Readline commands in command mode
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
+" Store large relative jumps in jumplist
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
 " ===== Keyboard Shortcuts =====
+
+" Write with sudo
+cnoremap w!! w !sudo dd of=%
 
 " Use jk to return to normal mode
 inoremap jk <Esc>
 cnoremap jk <Esc>
+
+nnoremap <Left> :cpfile<cr>
+nnoremap <Right> :cnfile<cr>
+nnoremap <Up> :cprevious<cr>
+nnoremap <Down> :cnext<cr>
+
+nnoremap <leader>q :keepalt bdelete<cr>
+
+" Enable moving visually selected lines up and down
+xmap J ]egv=gv
+xmap K [egv=gv
 
 " Use space bar as leader key
 let mapleader=" "
@@ -130,8 +169,7 @@ inoremap <Nul> <Space>
 " Alternate buffers
 nnoremap <leader><leader> <c-^>
 
-" Write with sudo
-cnoremap w!! w !sudo dd of=%
+nnoremap <leader>w :write<cr>
 
 nnoremap <leader>v :source ~/.vimrc<CR>
 
@@ -150,42 +188,18 @@ nnoremap <leader>s :%s/\v\s+$// \| :nohlsearch<CR>
 " <Space>l to clear search highlighting, turn off spell checking and redraw the screen.
 nnoremap <leader>l :nohlsearch \| set nospell<CR><C-l>
 
-" Use <Space>d to run dispatch
-nnoremap <leader>d :Dispatch<CR>
-
-" ------ Executing Scripts ------
-
-" Use <Space>r to execute scripts
-autocmd FileType javascript nnoremap <leader>r :!node --expose_gc %<CR>
-autocmd FileType python nnoremap <leader>r :!python3 %<CR>
-autocmd FileType sh nnoremap <leader>r :!/bin/bash %<CR>
-autocmd FileType java nnoremap <leader>r :!javac % && java %:r<CR>
-
-" ------ Running Tests ------
-
-" Use <Space>t to run tests
-autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
-autocmd FileType python nnoremap <leader>t :!pytest -m 'not slow' -v --tb=short tests/<CR>
-autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
-autocmd FileType cucumber nnoremap <leader>t :!pytest -v<CR>
+" Run all tests with <Space>t or just the current test file with <Space>T
 autocmd FileType cpp nnoremap <leader>t :!make test && ./test -c<CR>
-
-" Use <Space>T to test individual modules
-autocmd FileType python nnoremap <leader>T :!pytest -m 'not slow' -v --tb=short %<CR>
-
-" Use <Space>w to test wip tests
-autocmd FileType python nnoremap <leader>w :!pytest -m wip -v -s --tb=short tests/<CR>
-autocmd FileType python nnoremap <leader>W :!pytest -m wip -v -s --tb=short %<CR>
-
+autocmd FileType cucumber nnoremap <leader>t :!pytest -v<CR>
+autocmd FileType javascript nnoremap <leader>t :!npm test<CR>
 autocmd FileType php nnoremap <leader>t :!phpunit -c tests/phpunit.xml --color tests/unit/<CR>
 autocmd FileType php nnoremap <leader>T :!phpunit -c tests/phpunit.xml --color %<CR>
-autocmd FileType php nnoremap <leader>w :!phpunit -c tests/phpunit.xml --group wip --color tests/unit/<CR>
-autocmd FileType php nnoremap <leader>W :!phpunit -c tests/phpunit.xml --group wip --color %<CR>
+autocmd FileType python nnoremap <leader>t :!pytest -m 'not slow' -v --tb=short tests/<CR>
+autocmd FileType python nnoremap <leader>T :!pytest -m 'not slow' -v --tb=short %<CR>
+autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
 
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
-
-autocmd FileType python nnoremap <leader>f :!pytest -v --lf<CR>
 
 " ------ Opening Files ------
 
@@ -205,6 +219,13 @@ command -nargs=+ -complete=file -bar Rg silent! grep <args>|redraw!
 " ------ junegunn/fzf.vim ------
 nnoremap <C-p> :Files<cr>
 
+" ------ christoomey/vim-tmux-navigator ------
+" Enable quick navigation between windows from visual mode
+xnoremap <silent> <c-h> <Esc>:TmuxNavigateLeft<cr>
+xnoremap <silent> <c-j> <Esc>:TmuxNavigateDown<cr>
+xnoremap <silent> <c-k> <Esc>:TmuxNavigateUp<cr>
+xnoremap <silent> <c-l> <Esc>:TmuxNavigateRight<cr>
+
 " ------ lervag/vimtex ------
 let g:vimtex_view_method='skim'
 
@@ -217,7 +238,6 @@ let g:airline_theme='bubblegum'
 let g:jsx_ext_required = 0
 
 " ----- w0rp/ale -----
-
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_open_list = 1
@@ -251,19 +271,20 @@ autocmd BufRead,BufNewFile .eslintrc set filetype=yaml
 " Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType mkd nnoremap o A<CR>
-autocmd FileType markdown set textwidth=90
+autocmd FileType markdown setlocal textwidth=90
 autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=94
 autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
 autocmd FileType php setlocal shiftwidth=4 tabstop=4
 autocmd FileType crontab setlocal commentstring=#\ %s
 autocmd FileType expect setlocal commentstring=#\ %s
 
-" Style
 
-highlight Comment cterm=italic
-highlight Type cterm=italic
+" ===== Local vim configuration =====
 
-highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+if filereadable(".git/vimrc")
+  source .git/vimrc
+endif
+
+if filereadable("../.git/vimrc")
+  source ../.git/vimrc
+endif
