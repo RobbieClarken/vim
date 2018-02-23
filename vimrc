@@ -67,7 +67,14 @@ highlight Type cterm=italic
 set encoding=utf-8                " Use utf-8 as default encoding.
 set history=1000                  " Save last 1000 commands in vim history.
 set spelllang=en_au               " Use Australian English.
-set clipboard=unnamedplus         " Copy/paste to Mac and X clipboard.
+
+" Copy/paste to Mac and X clipboard.
+if has('mac')
+  set clipboard=unnamed
+else
+  set clipboard=unnamedplus
+endif
+
 set hidden                        " Don't warn when leaving an unsaved buffer.
 set wildmenu                      " Enhanced command line completion.
 set wildmode=longest,list         " Fix tab completion for file names.
