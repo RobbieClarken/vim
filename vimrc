@@ -16,7 +16,7 @@ Plug 'tpope/vim-commentary'             " Comment / uncomment code
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  " Install fzf
 Plug 'junegunn/fzf.vim'                 " Fuzzy find files with ctrl-p
 Plug 'SirVer/ultisnips'                 " Code snippets manager
-Plug 'bronson/vim-trailing-whitespace'  " Highlight trailing whitespace
+Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
 Plug 'triglav/vim-visual-increment'     " Create column of ascending numbers
 Plug 'tommcdo/vim-exchange'             " Swap regions of text
 Plug 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
@@ -47,7 +47,10 @@ set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
 set title                         " Set the terminal's title.
 set laststatus=2                  " Always show the status line.
-set listchars=eol:¬,tab:▸\        " Pretty characters for tab and end of line
+
+" Show tabs as fancy unicode characters
+set listchars=tab:└─
+set list
 
 " Use base16
 if filereadable(expand("~/.vimrc_background"))
@@ -64,7 +67,7 @@ highlight Type cterm=italic
 set encoding=utf-8                " Use utf-8 as default encoding.
 set history=1000                  " Save last 1000 commands in vim history.
 set spelllang=en_au               " Use Australian English.
-set clipboard=unnamed             " Put from the Mac clipboard.
+set clipboard=unnamedplus         " Copy/paste to Mac and X clipboard.
 set hidden                        " Don't warn when leaving an unsaved buffer.
 set wildmenu                      " Enhanced command line completion.
 set wildmode=longest,list         " Fix tab completion for file names.
@@ -113,6 +116,20 @@ autocmd FileType * setlocal formatoptions-=cro
 " When reopening a file, jump to the last location
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
                       \| exe "normal! g'\"" | endif
+
+if v:version > 703 || v:version == 703 && has('patch541')
+  set formatoptions+=j                " Remove comment leader when joining comment lines
+endif
+
+set scrolloff=3                       " Start scrolling 3 lines before edge of viewport
+
+" Ignore annoying swapfile messages; we don't care about opening the file in multiple buffers
+" because wincent/terminus will always reload changed files on focus
+set shortmess+=A
+
+if has('linebreak')
+  let &showbreak='⤷ '
+endif
 
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
@@ -170,7 +187,7 @@ nnoremap <leader>] :silent execute '!ctags -R . >/dev/null &' \| execute ':redra
 autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
 
 " Delete trailing white space with <Space>w
-nnoremap <leader>s :%s/\v\s+$// \| :nohlsearch<CR>
+nnoremap <leader>s :StripWhitespace<cr>
 
 " <Space>l to clear search highlighting, turn off spell checking and redraw the screen.
 nnoremap <leader>l :nohlsearch \| set nospell<CR><C-l>
@@ -225,10 +242,14 @@ let g:airline_theme='bubblegum'
 let g:jsx_ext_required = 0
 
 " ----- w0rp/ale -----
+
+" Run ALE only when saving
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
+
 let g:ale_open_list = 1
 let g:ale_python_mypy_options = '--ignore-missing-imports'
+
 " Fix rendering issues:
 nnoremap <leader>a :ALEDisable<cr> \| :ALEEnable<cr>
 
