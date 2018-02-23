@@ -3,6 +3,7 @@ set nocompatible                  " Use Vim-only features
 " ===== Load Plugins =====
 
 call plug#begin('~/.vim/plugged')
+Plug 'wincent/terminus'                 " mouse support, reload on focus, handle window resize
 Plug 'vim-airline/vim-airline'          " Better status line
 Plug 'vim-airline/vim-airline-themes'   " Themes for vim-airline
 Plug 'tpope/vim-repeat'                 " Add . support to plugin commands
@@ -84,20 +85,6 @@ set diffopt+=vertical             " Use vertical splits for viewing diffs
 set splitbelow                    " Make horizontal splits (eg Gstatus) appear at the bottom
 set splitright                    " Make new vertical splits appear on the right
 set path+=**                      " Make :find look in subdirectories
-
-" Redraw when rim is resized
-autocmd VimResized * execute "normal! \<c-w>="
-
-" Enable mouse support in all modes
-set mouse+=a
-
-if has("mouse_sgr")
-  " Fix mouse support for columns greater than 223
-  set ttymouse=sgr
-elseif has("mouse_xterm")
-  " Use faster mouse handling
-  set ttymouse=xterm2
-end
 
 " Add folders that vimgrep shouldn't search
 set wildignore+=.venv/**
