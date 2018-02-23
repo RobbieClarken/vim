@@ -6,3 +6,20 @@ services:
 		image: $2
 		ports: $0
 endsnippet
+
+
+snippet eslint
+extends:
+	- eslint:recommended
+	- plugin:react/recommended
+
+parser: babel-eslint
+
+env:
+	browser: true
+	es6: true
+
+rules:
+	react/prop-types: 0
+	no-console: 0
+endsnippet
