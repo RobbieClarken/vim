@@ -72,7 +72,26 @@ set spelllang=en_au               " Use Australian English.
 if has('mac')
   set clipboard=unnamed
 else
+
   set clipboard=unnamedplus
+
+  if executable("xsel")
+
+    function! PreserveClipboard()
+      call system("xsel -ib", getreg('+'))
+    endfunction
+
+    function! PreserveClipboadAndSuspend()
+      call PreserveClipboard()
+      suspend
+    endfunction
+
+    autocmd VimLeave * call PreserveClipboard()
+    nnoremap <silent> <c-z> :call PreserveClipboadAndSuspend()<cr>
+    vnoremap <silent> <c-z> :<c-u>call PreserveClipboadAndSuspend()<cr>
+
+  endif
+
 endif
 
 set hidden                        " Don't warn when leaving an unsaved buffer.
