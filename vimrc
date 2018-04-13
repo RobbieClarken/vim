@@ -147,6 +147,8 @@ if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j                " Remove comment leader when joining comment lines
 endif
 
+set timeoutlen=500                    " Reduce the timeout between keys in mappings
+
 set scrolloff=3                       " Start scrolling 3 lines before edge of viewport
 
 " Ignore annoying swapfile messages; we don't care about opening the file in multiple buffers
@@ -169,10 +171,18 @@ cnoremap <C-e> <End>
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
+" enable undo to undo ctrl-u and ctrl-w
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
+
+" When jumping with left mouse click, add previous position to jumplist
+nnoremap <LeftMouse> m'<LeftMouse>
+inoremap <LeftMouse> <C-o>m'<LeftMouse>
+
 " ===== Keyboard Shortcuts =====
 
 " Write with sudo
-cnoremap w!! w !sudo dd of=%
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' \| edit!
 
 " Use jk to return to normal mode
 inoremap jk <Esc>
@@ -200,6 +210,7 @@ inoremap <Nul> <Space>
 nnoremap <leader><leader> <c-^>
 
 nnoremap <leader>w :write<cr>
+nnoremap <leader>q :bdelete<CR>
 
 nnoremap <leader>v :source ~/.vimrc<CR>
 
@@ -244,17 +255,31 @@ endif
 
 command -nargs=+ -complete=file -bar Rg silent! grep <args>|redraw!
 
+
 " ===== Plugin Configuration =====
 
 " ------ junegunn/fzf.vim ------
 nnoremap <C-p> :Files<cr>
 
 " ------ christoomey/vim-tmux-navigator ------
-" Enable quick navigation between windows from visual mode
-xnoremap <silent> <c-h> <Esc>:TmuxNavigateLeft<cr>
-xnoremap <silent> <c-j> <Esc>:TmuxNavigateDown<cr>
-xnoremap <silent> <c-k> <Esc>:TmuxNavigateUp<cr>
-xnoremap <silent> <c-l> <Esc>:TmuxNavigateRight<cr>
+
+" Enable meta key mappings
+execute "set <M-h>=\eh"
+execute "set <M-j>=\ej"
+execute "set <M-k>=\ek"
+execute "set <M-l>=\el"
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <M-h> <Esc>:TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> <Esc>:TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> <Esc>:TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> <Esc>:TmuxNavigateRight<cr>
+
+xnoremap <silent> <M-h> <Esc>:TmuxNavigateLeft<cr>
+xnoremap <silent> <M-j> <Esc>:TmuxNavigateDown<cr>
+xnoremap <silent> <M-k> <Esc>:TmuxNavigateUp<cr>
+xnoremap <silent> <M-l> <Esc>:TmuxNavigateRight<cr>
 
 " ------ lervag/vimtex ------
 let g:vimtex_view_method='skim'
@@ -269,12 +294,7 @@ let g:jsx_ext_required = 0
 
 " ----- w0rp/ale -----
 
-" Run ALE only when saving
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 'never'
-
-let g:ale_open_list = 1
-let g:ale_python_mypy_options = '--ignore-missing-imports'
+let g:ale_sign_column_always = 1
 
 " Fix rendering issues:
 nnoremap <leader>a :ALEDisable<cr> \| :ALEEnable<cr>
@@ -301,6 +321,7 @@ autocmd BufRead,BufNewFile *.dockerfile set filetype=dockerfile
 autocmd BufRead,BufNewFile wscript set filetype=python
 autocmd BufRead,BufNewFile *.spec set filetype=python
 autocmd BufRead,BufNewFile .eslintrc set filetype=yaml
+autocmd BufRead,BufNewFile *.sshconfig set filetype=sshconfig
 
 " Filetype specific customisations
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
@@ -322,3 +343,7 @@ endif
 if filereadable("../.git/vimrc")
   source ../.git/vimrc
 endif
+
+" ===== Abbreviations =====
+
+iabbrev <expr> now# strftime("%Y-%m-%d %H:%M:%S")
