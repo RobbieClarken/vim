@@ -37,6 +37,8 @@ call plug#end()
 filetype plugin indent on         " Enable loading plugins by filetype
 runtime macros/matchit.vim        " Jump between opening and closing xml tags with %
 
+set encoding=utf-8                " Use utf-8 as default encoding.
+
 " ===== Set Styling =====
 
 set t_Co=256                      " Use 256 colors
@@ -64,7 +66,6 @@ highlight Type cterm=italic
 
 " ===== Configure Vim =====
 
-set encoding=utf-8                " Use utf-8 as default encoding.
 set history=1000                  " Save last 1000 commands in vim history.
 set spelllang=en_au               " Use Australian English.
 
