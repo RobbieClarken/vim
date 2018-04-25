@@ -13,7 +13,7 @@ Plug 'tpope/vim-abolish'                " Change variable case format
 Plug 'tpope/vim-fugitive'               " Git support
 Plug 'tpope/vim-projectionist'          " Switching from test file to implementation file
 Plug 'tpope/vim-commentary'             " Comment / uncomment code
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  " Install fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-completion --no-update-rc' }  " Install fzf
 Plug 'junegunn/fzf.vim'                 " Fuzzy find files with ctrl-p
 Plug 'SirVer/ultisnips'                 " Code snippets manager
 Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
