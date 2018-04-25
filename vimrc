@@ -148,8 +148,6 @@ if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j                " Remove comment leader when joining comment lines
 endif
 
-set timeoutlen=500                    " Reduce the timeout between keys in mappings
-
 set scrolloff=3                       " Start scrolling 3 lines before edge of viewport
 
 " Ignore annoying swapfile messages; we don't care about opening the file in multiple buffers
@@ -210,7 +208,8 @@ inoremap <Nul> <Space>
 " Alternate buffers
 nnoremap <leader><leader> <c-^>
 
-nnoremap <leader>w :write<cr>
+nnoremap <leader>w :wall<cr>
+nnoremap <leader>W :wall<cr>
 nnoremap <leader>q :bdelete<CR>
 
 nnoremap <leader>v :source ~/.vimrc<CR>
@@ -228,7 +227,8 @@ autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >
 nnoremap <leader>s :StripWhitespace<cr>
 
 " <Space>l to clear search highlighting, turn off spell checking and redraw the screen.
-nnoremap <leader>l :nohlsearch \| set nospell<CR><C-l>
+nnoremap <leader>l :nohlsearch \| set nospell nocursorline<CR><C-l>
+nnoremap <C-l> :nohlsearch \| set nospell nocursorline<CR><C-l>
 
 " Run all tests with <Space>t or just the current test file with <Space>T
 autocmd FileType cpp nnoremap <leader>t :!make test && ./test -c<CR>
@@ -341,6 +341,8 @@ autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
 autocmd FileType php setlocal shiftwidth=4 tabstop=4
 autocmd FileType crontab setlocal commentstring=#\ %s
 autocmd FileType expect setlocal commentstring=#\ %s
+autocmd FileType go setlocal noexpandtab
+autocmd FileType gitconfig setlocal noexpandtab
 
 
 " ===== Local vim configuration =====
