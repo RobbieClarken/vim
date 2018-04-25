@@ -286,9 +286,16 @@ xnoremap <silent> <M-l> <Esc>:TmuxNavigateRight<cr>
 let g:vimtex_view_method='skim'
 
 " ------ vim-airline/vim-airline ------
+
 let g:airline_left_sep = ' »'
 let g:airline_right_sep = '« '
 let g:airline_theme='bubblegum'
+
+" Remove unwanted info
+let g:airline_section_x=''
+let g:airline_section_y=''
+let g:airline#extensions#virtualenv#enabled=0
+let g:airline#extensions#ale#enabled = 1
 
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
@@ -296,6 +303,7 @@ let g:jsx_ext_required = 0
 " ----- w0rp/ale -----
 
 let g:ale_sign_column_always = 1
+let g:ale_lint_on_enter = 0
 
 " Fix rendering issues:
 nnoremap <leader>a :ALEDisable<cr> \| :ALEEnable<cr>
