@@ -1,15 +1,27 @@
 snippet tox
 [tox]
-envlist = py35
+envlist = py36, flake8, coverage
 
 [testenv]
-deps =
-  pytest
-  flake8
-commands =
-  py.test
-  flake8
+deps = pytest
+commands = pytest
+
+[testenv:flake8]
+deps = flake8
+commands = flake8
+
+[testenv:coverage]
+deps = pytest-cov
+commands = pytest --cov=src --cov-report html
 
 [flake8]
-max-line-length = 84
+max-line-length = 100
+exclude = migrations
+endsnippet
+
+
+snippet flake8
+[flake8]
+max-line-length = 100
+exclude = migrations
 endsnippet
