@@ -154,9 +154,16 @@ set scrolloff=3                       " Start scrolling 3 lines before edge of v
 " because wincent/terminus will always reload changed files on focus
 set shortmess+=A
 
+" Display indication of linewraps
 if has('linebreak')
   let &showbreak='⤷ '
 endif
+
+" Enable meta key mappings (used for tmux-navigator mappings below)
+execute "set <M-h>=\eh"
+execute "set <M-j>=\ej"
+execute "set <M-k>=\ek"
+execute "set <M-l>=\el"
 
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
@@ -264,12 +271,6 @@ nnoremap <C-p> :Files<cr>
 
 " ------ christoomey/vim-tmux-navigator ------
 
-" Enable meta key mappings
-execute "set <M-h>=\eh"
-execute "set <M-j>=\ej"
-execute "set <M-k>=\ek"
-execute "set <M-l>=\el"
-
 let g:tmux_navigator_no_mappings = 1
 
 nnoremap <silent> <M-h> <Esc>:TmuxNavigateLeft<cr>
@@ -281,6 +282,11 @@ xnoremap <silent> <M-h> <Esc>:TmuxNavigateLeft<cr>
 xnoremap <silent> <M-j> <Esc>:TmuxNavigateDown<cr>
 xnoremap <silent> <M-k> <Esc>:TmuxNavigateUp<cr>
 xnoremap <silent> <M-l> <Esc>:TmuxNavigateRight<cr>
+
+inoremap <silent> <M-h> <Esc>:TmuxNavigateLeft<cr>
+inoremap <silent> <M-j> <Esc>:TmuxNavigateDown<cr>
+inoremap <silent> <M-k> <Esc>:TmuxNavigateUp<cr>
+inoremap <silent> <M-l> <Esc>:TmuxNavigateRight<cr>
 
 " ------ lervag/vimtex ------
 let g:vimtex_view_method='skim'
