@@ -13,7 +13,9 @@ Plug 'tpope/vim-abolish'                " Change variable case format
 Plug 'tpope/vim-fugitive'               " Git support
 Plug 'tpope/vim-projectionist'          " Switching from test file to implementation file
 Plug 'tpope/vim-commentary'             " Comment / uncomment code
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-completion --no-update-rc' }  " Install fzf
+" Install fzf for fuzzy finding
+Plug 'junegunn/fzf', { 'dir': '~/.fzf',
+                     \ 'do': './install --all --no-completion --no-update-rc' }
 Plug 'junegunn/fzf.vim'                 " Fuzzy find files with ctrl-p
 Plug 'SirVer/ultisnips'                 " Code snippets manager
 Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
@@ -26,12 +28,14 @@ Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plug 'lervag/vimtex'                    " LaTeX syntax support
 Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
+Plug 'cespare/vim-toml'                 " TOML syntax support
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
 Plug 'Vimjas/vim-python-pep8-indent'    " PEP8 indentation
 Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realtime
 Plug 'chriskempson/base16-vim'          " base16 themes
+Plug 'vim-scripts/SyntaxAttr.vim'       " Reveal syntax highlighting attributes
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
@@ -60,7 +64,6 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
-highlight ColorColumn ctermbg=236
 highlight Comment cterm=italic
 highlight Type cterm=italic
 
@@ -268,6 +271,7 @@ command -nargs=+ -complete=file -bar Rg silent! grep <args>|redraw!
 
 " ------ junegunn/fzf.vim ------
 nnoremap <C-p> :Files<cr>
+nnoremap <C-q> :Files<cr>
 
 " ------ christoomey/vim-tmux-navigator ------
 

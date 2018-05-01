@@ -34,11 +34,27 @@ endsnippet
 
 
 snippet comp "react component"
-export default class $1 extends React.Component {
+class $1 extends React.Component {
 	render () {
 		return (
-			$0
+			<button>Hey Ya</button>$0
 		)
 	}
 }
+endsnippet
+
+
+snippet ecomp "exported react component"
+export default class $1 extends React.Component {
+	render () {
+		return (
+			<button>Hey Ya</button>$0
+		)
+	}
+}
+endsnippet
+
+
+snippet no-unused
+// eslint-disable-next-line no-unused-vars
 endsnippet
