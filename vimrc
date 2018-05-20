@@ -218,8 +218,8 @@ inoremap <Nul> <Space>
 " Alternate buffers
 nnoremap <leader><leader> <c-^>
 
-nnoremap <leader>w :wall<cr>
-nnoremap <leader>W :wall<cr>
+nnoremap <leader>s :write<cr>
+nnoremap <leader>S :wall<cr>
 nnoremap <leader>q :bdelete<CR>
 
 nnoremap <leader>v :source ~/.vimrc<CR>
@@ -234,11 +234,10 @@ nnoremap <leader>] :silent execute '!ctags -R . >/dev/null &' \| execute ':redra
 autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
 
 " Delete trailing white space with <Space>w
-nnoremap <leader>s :StripWhitespace<cr>
+nnoremap <leader>w :StripWhitespace<cr>
 
-" <Space>l to clear search highlighting, turn off spell checking and redraw the screen.
-nnoremap <leader>l :nohlsearch \| set nospell nocursorline<CR><C-l>
-nnoremap <C-l> :nohlsearch \| set nospell nocursorline<CR><C-l>
+" <C-l> to clear search highlighting, turn off spell checking and redraw the screen
+nnoremap <silent> <C-l> :nohlsearch \| set nospell nocursorline<CR><C-l>
 
 " Run all tests with <Space>t or just the current test file with <Space>T
 autocmd FileType cpp nnoremap <leader>t :!make test && ./test -c<CR>
@@ -269,6 +268,11 @@ command -nargs=+ -complete=file -bar Rg silent! grep <args>|redraw!
 
 " ===== Plugin Configuration =====
 
+" ------ tpope/vim-unimpaired ------
+
+" Use co as prefix for unimpaired toggle mappings
+nmap co yo
+
 " ------ junegunn/fzf.vim ------
 nnoremap <C-p> :Files<cr>
 nnoremap <C-q> :Files<cr>
@@ -297,9 +301,9 @@ let g:vimtex_view_method='skim'
 
 " ------ vim-airline/vim-airline ------
 
-let g:airline_left_sep = ' »'
-let g:airline_right_sep = '« '
-let g:airline_theme='bubblegum'
+let g:airline_left_sep = ' » '
+let g:airline_right_sep = ' « '
+let g:airline_theme='base16'
 
 " Remove unwanted info
 let g:airline_section_x=''
@@ -312,8 +316,11 @@ let g:jsx_ext_required = 0
 
 " ----- w0rp/ale -----
 
+let g:ale_sign_error = '✗✗'
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_enter = 0
+let g:ale_linters = {'rust': ['cargo']}
+let g:ale_rust_cargo_check_all_targets = 1
 
 " Fix rendering issues:
 nnoremap <leader>a :ALEDisable<cr> \| :ALEEnable<cr>
@@ -343,10 +350,10 @@ autocmd BufRead,BufNewFile .eslintrc set filetype=yaml
 autocmd BufRead,BufNewFile *.sshconfig set filetype=sshconfig
 
 " Filetype specific customisations
-autocmd FileType python setlocal shiftwidth=4 tabstop=4
 autocmd FileType mkd nnoremap o A<CR>
-autocmd FileType markdown setlocal textwidth=90
-autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=94
+autocmd FileType markdown setlocal textwidth=100
+autocmd FileType vimwiki setlocal textwidth=100
+autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=100
 autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
 autocmd FileType php setlocal shiftwidth=4 tabstop=4
 autocmd FileType crontab setlocal commentstring=#\ %s
