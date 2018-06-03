@@ -35,7 +35,8 @@ Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
 Plug 'Vimjas/vim-python-pep8-indent'    " PEP8 indentation
 Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realtime
-Plug 'chriskempson/base16-vim'          " base16 themes
+" base16 themes
+Plug 'chriskempson/base16-vim', { 'commit': '1a6e69111bf38ead6a65598689ec11f8cf507f4f' }
 Plug 'vim-scripts/SyntaxAttr.vim'       " Reveal syntax highlighting attributes
 call plug#end()
 
@@ -341,6 +342,7 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_on_enter = 0
 let g:ale_linters = {'rust': ['cargo']}
 let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_warn_about_trailing_whitespace = 0
 
 " Fix rendering issues:
 nnoremap <leader>a :ALEDisable<cr> \| :ALEEnable<cr>
