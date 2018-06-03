@@ -163,11 +163,30 @@ if has('linebreak')
   let &showbreak='⤷ '
 endif
 
-" Enable meta key mappings (used for tmux-navigator mappings below)
-execute "set <M-h>=\eh"
-execute "set <M-j>=\ej"
-execute "set <M-k>=\ek"
-execute "set <M-l>=\el"
+function! EnableMetaMappings()
+  " Enable meta key mappings (used for tmux-navigator mappings below)
+  execute "set <M-h>=\eh <M-j>=\ej <M-k>=\ek <M-l>=\el"
+  let s:meta_mappings_on = 1
+endfunction
+
+function! DisableMetaMappings()
+  set <M-h>= <M-j>= <M-k>= <M-l>=
+  let s:meta_mappings_on = 0
+endfunction
+
+command! EnableMetaMappings call EnableMetaMappings()
+command! DisableMetaMappings call DisableMetaMappings()
+
+function! ToggleMetaMappings()
+  let l:cmd = s:meta_mappings_on ? "DisableMetaMappings" : "EnableMetaMappings"
+  execute l:cmd
+  redraw!
+  echo ":" . l:cmd
+endfunction
+
+nnoremap com :call ToggleMetaMappings()<cr>
+
+EnableMetaMappings
 
 " Make the & command preserve the substitution flags.
 nnoremap & :&&<CR>
