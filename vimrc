@@ -83,11 +83,11 @@ else
 
   if executable("xsel")
 
-    function! PreserveClipboard()
+    function! PreserveClipboard() abort
       call system("xsel -ib", getreg('+'))
     endfunction
 
-    function! PreserveClipboadAndSuspend()
+    function! PreserveClipboadAndSuspend() abort
       call PreserveClipboard()
       suspend
     endfunction
@@ -164,13 +164,13 @@ if has('linebreak')
   let &showbreak='⤷ '
 endif
 
-function! EnableMetaMappings()
+function! EnableMetaMappings() abort
   " Enable meta key mappings (used for tmux-navigator mappings below)
   execute "set <M-h>=\eh <M-j>=\ej <M-k>=\ek <M-l>=\el"
   let s:meta_mappings_on = 1
 endfunction
 
-function! DisableMetaMappings()
+function! DisableMetaMappings() abort
   set <M-h>= <M-j>= <M-k>= <M-l>=
   let s:meta_mappings_on = 0
 endfunction
@@ -178,10 +178,10 @@ endfunction
 command! EnableMetaMappings call EnableMetaMappings()
 command! DisableMetaMappings call DisableMetaMappings()
 
-function! ToggleMetaMappings()
+function! ToggleMetaMappings() abort
   let l:cmd = s:meta_mappings_on ? "DisableMetaMappings" : "EnableMetaMappings"
   execute l:cmd
-  redraw!
+  redraw
   echo ":" . l:cmd
 endfunction
 
@@ -280,7 +280,7 @@ autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 " ------ grepping -----
 
 if executable("rg")
-  set grepprg=rg\ -S\ --vimgrep\ --no-heading
+  set grepprg=rg\ --vimgrep\ --smart-case
   set grepformat=%f:%l:%c:%m
 endif
 
