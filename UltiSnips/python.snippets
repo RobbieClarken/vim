@@ -3,14 +3,22 @@ snippet py
 # -*- coding: utf-8 -*-
 endsnippet
 
+snippet 404
+from rest_framework.generics import get_object_or_404
+endsnippet
+
+snippet response
+from rest_framework.response import Response
+endsnippet
+
 snippet if
-if __name__ == '__main__':
+if __name__ == "__main__":
 	$0
 endsnippet
 
 
 snippet skip
-@unittest.skip('BLOCK_COMMIT: Remove before committing')
+@unittest.skip("BLOCK_COMMIT: Remove before committing")
 endsnippet
 
 snippet interact
@@ -23,19 +31,19 @@ from setuptools import setup
 import re
 
 
-with open('src/$1/__init__.py') as file:
-    version = re.search(r"__version__ = '(.*)'", file.read()).group(1)
+with open("src/$1/__init__.py") as file:
+    version = re.search(r'__version__ = "(.*)"', file.read()).group(1)
 
 
 setup(
-    name='$1',
+    name="$1",
     version=version,
-    license='MIT',
-    author='Robbie Clarken',
-    author_email='robbie.clarken@gmail.com',
-    url='https://github.com/RobbieClarken/$1',
-    package_dir={'': 'src'},
-    packages=['$1'],
+    license="MIT",
+    author="Robbie Clarken",
+    author_email="robbie.clarken@gmail.com",
+    url="https://github.com/RobbieClarken/$1",
+    package_dir={"": "src"},
+    packages=["$1"],
     install_requires=[$0],
 )
 endsnippet
@@ -49,7 +57,7 @@ snippet vcr
 from vcr import VCR
 
 
-vcr = VCR(cassette_library_dir='tests/fixtures/cassettes', record_mode='new_episodes')
+vcr = VCR(cassette_library_dir="tests/fixtures/cassettes", record_mode="new_episodes")
 endsnippet
 
 snippet dt
@@ -58,8 +66,8 @@ endsnippet
 
 snippet entry
 entry_points={
-    'console_scripts': [
-        '$1',
+    "console_scripts": [
+        "$1",
     ],
 },$0
 endsnippet
@@ -68,12 +76,12 @@ snippet log
 logger = logging.getLogger()
 handler = logging.StreamHandler()
 handler.setFormatter(
-    logging.Formatter('%(asctime)s.%(msecs)03d [%(levelname)s] %(name)s '
-                      '%(filename)s:%(funcName)s:%(lineno)d | %(message)s',
-                      datefmt='%Y-%m-%dT%H:%M:%S')
+    logging.Formatter("%(asctime)s.%(msecs)03d [%(levelname)s] %(name)s "
+                      "%(filename)s:%(funcName)s:%(lineno)d | %(message)s",
+                      datefmt="%Y-%m-%dT%H:%M:%S")
 )
 logger.handlers = [handler]
-logger.setLevel('DEBUG')
+logger.setLevel("DEBUG")
 endsnippet
 
 snippet flask
@@ -83,13 +91,13 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    return 'All good'
+    return "All good"
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
 endsnippet
 
 

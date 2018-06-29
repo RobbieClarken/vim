@@ -284,8 +284,6 @@ if executable("rg")
   set grepformat=%f:%l:%c:%m
 endif
 
-command -nargs=+ -complete=file -bar Rg silent! grep <args>|redraw!
-
 
 " ===== Plugin Configuration =====
 
@@ -370,6 +368,7 @@ autocmd BufRead,BufNewFile wscript set filetype=python
 autocmd BufRead,BufNewFile *.spec set filetype=python
 autocmd BufRead,BufNewFile .eslintrc set filetype=yaml
 autocmd BufRead,BufNewFile *.sshconfig set filetype=sshconfig
+autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
 " Filetype specific customisations
 autocmd FileType mkd nnoremap o A<CR>
