@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile .eslintrc set filetype=yaml
+autocmd BufRead,BufNewFile .eslintrc setfiletype yaml

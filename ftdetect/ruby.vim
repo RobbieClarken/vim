@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+autocmd BufRead,BufNewFile Vagrantfile setfiletype ruby

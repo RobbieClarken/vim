@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.sshconfig set filetype=sshconfig
+autocmd BufRead,BufNewFile *.sshconfig setfiletype sshconfig
