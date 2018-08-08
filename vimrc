@@ -355,19 +355,6 @@ let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
 " Indent <head> and <body> tags in HTML
 let g:html_indent_inctags = "html,body,head,tbody"
 
-" Set filetypes of unmatched files
-autocmd BufRead,BufNewFile *.ejs set filetype=html
-autocmd BufRead,BufNewFile *.stt set filetype=c
-autocmd BufRead,BufNewFile .bash_local set filetype=sh
-autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
-autocmd BufRead,BufNewFile *.sls set filetype=yaml
-autocmd BufRead,BufNewFile *.dockerfile set filetype=dockerfile
-autocmd BufRead,BufNewFile wscript set filetype=python
-autocmd BufRead,BufNewFile *.spec set filetype=python
-autocmd BufRead,BufNewFile .eslintrc set filetype=yaml
-autocmd BufRead,BufNewFile *.sshconfig set filetype=sshconfig
-autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
-
 " Filetype specific customisations
 autocmd FileType mkd nnoremap o A<CR>
 autocmd FileType markdown setlocal textwidth=100
