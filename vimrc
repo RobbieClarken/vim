@@ -155,6 +155,9 @@ endif
 
 set scrolloff=3                       " Start scrolling 3 lines before edge of viewport
 
+" Don't load the matchparen plugin which highlights matching parentheses
+let loaded_matchparen=1
+
 " Ignore annoying swapfile messages; we don't care about opening the file in multiple buffers
 " because wincent/terminus will always reload changed files on focus
 set shortmess+=A
@@ -224,10 +227,6 @@ nnoremap <Up> :cprevious<cr>
 nnoremap <Down> :cnext<cr>
 
 nnoremap <leader>q :keepalt bdelete<cr>
-
-" Enable moving visually selected lines up and down
-xmap J ]egv=gv
-xmap K [egv=gv
 
 " Use space bar as leader key
 let mapleader=" "
@@ -337,7 +336,6 @@ let g:jsx_ext_required = 0
 
 let g:ale_sign_error = '✗✗'
 let g:ale_sign_column_always = 1
-let g:ale_lint_on_enter = 0
 let g:ale_linters = {'rust': ['cargo']}
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_warn_about_trailing_whitespace = 0
@@ -382,6 +380,9 @@ autocmd FileType expect setlocal commentstring=#\ %s
 autocmd FileType go setlocal noexpandtab
 autocmd FileType gitconfig setlocal noexpandtab
 
+let g:ale_pattern_options = {
+\ '.md$': {'ale_linters': [], 'ale_fixers': []},
+\}
 
 " ===== Local vim configuration =====
 
