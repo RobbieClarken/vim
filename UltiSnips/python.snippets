@@ -165,3 +165,10 @@ snippet init
 def __init__(self, $1):
 	$0
 endsnippet
+
+
+snippet param
+@pytest.mark.parametrize("$1", [
+$0
+])
+endsnippet
