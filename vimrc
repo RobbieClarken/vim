@@ -30,6 +30,7 @@ Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
 Plug 'cespare/vim-toml'                 " TOML syntax support
 Plug 'leafgarland/typescript-vim'       " TypeScript syntax support
+Plug 'Galooshi/vim-import-js'           " Update typescript and javascript imports
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
