@@ -1,6 +1,6 @@
 set nocompatible                  " Use Vim-only features
 
-" ===== Load Plugins =====
+" ===== Load Plugins ===== {{{1
 
 call plug#begin('~/.vim/plugged')
 Plug 'wincent/terminus'                 " mouse support, reload on focus, handle window resize
@@ -46,7 +46,7 @@ runtime macros/matchit.vim        " Jump between opening and closing xml tags wi
 
 set encoding=utf-8                " Use utf-8 as default encoding.
 
-" ===== Set Styling =====
+" ===== Set Styling ===== {{{1
 
 set t_Co=256                      " Use 256 colors
 syntax enable                     " Turn on syntax highlighting.
@@ -70,7 +70,7 @@ endif
 highlight Comment cterm=italic
 highlight Type cterm=italic
 
-" ===== Configure Vim =====
+" ===== Configure Vim ===== {{{1
 
 set history=1000                  " Save last 1000 commands in vim history.
 set spelllang=en_au               " Use Australian English.
@@ -133,8 +133,6 @@ set wildignore+=**.ipynb
 set wildignore+=*.egg-info/**
 set wildignore+=tmp/**
 set wildignore+=docs/_build/**
-set wildignore+=db/**
-set wildignore+=dbd/**
 set wildignore+=vendor/**
 set wildignore+=temp/**
 set wildignore+=tags
@@ -213,14 +211,10 @@ inoremap <c-w> <c-g>u<c-w>
 nnoremap <LeftMouse> m'<LeftMouse>
 inoremap <LeftMouse> <C-o>m'<LeftMouse>
 
-" ===== Keyboard Shortcuts =====
+" ===== Keyboard Shortcuts ===== {{{1
 
 " Write with sudo
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' \| edit!
-
-" Use jk to return to normal mode
-inoremap jk <Esc>
-cnoremap jk <Esc>
 
 nnoremap <Left> :cpfile<cr>
 nnoremap <Right> :cnfile<cr>
@@ -285,7 +279,7 @@ if executable("rg")
 endif
 
 
-" ===== Plugin Configuration =====
+" ===== Plugin Configuration ===== {{{1
 
 " ------ tpope/vim-unimpaired ------
 
@@ -341,9 +335,6 @@ let g:ale_linters = {'rust': ['cargo']}
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_warn_about_trailing_whitespace = 0
 
-" Fix rendering issues:
-nnoremap <leader>a :ALEDisable<cr> \| :ALEEnable<cr>
-
 " ----- vimwiki/vimwiki -----
 let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
 
@@ -351,7 +342,7 @@ let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': 
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
 
 
-" ===== Filetype Configuration =====
+" ===== Filetype Configuration ===== {{{1
 
 " Indent <head> and <body> tags in HTML
 let g:html_indent_inctags = "html,body,head,tbody"
@@ -372,7 +363,7 @@ let g:ale_pattern_options = {
 \ '.md$': {'ale_linters': [], 'ale_fixers': []},
 \}
 
-" ===== Local vim configuration =====
+" ===== Local vim configuration ===== {{{1
 
 if filereadable(".git/vimrc")
   source .git/vimrc
@@ -382,6 +373,8 @@ if filereadable("../.git/vimrc")
   source ../.git/vimrc
 endif
 
-" ===== Abbreviations =====
+" ===== Abbreviations ===== {{{1
 
 iabbrev <expr> now# strftime("%Y-%m-%d %H:%M:%S")
+
+" vim: foldmethod=marker nofoldenable
