@@ -138,6 +138,9 @@ set wildignore+=temp/**
 set wildignore+=tags
 set wildignore+=**.class
 
+" Folders and files that should appear in netrw
+let g:netrw_list_hide = '\v(__pycache__|.*\.swp)'
+
 " Prevent ins-completion from looking in node_modules
 set complete-=i
 

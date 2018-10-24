@@ -5,8 +5,29 @@ it('$1', () => {
 endsnippet
 
 
+snippet beforeEach
+beforeEach(() => {
+	$1
+});
+endsnippet
+
+
+snippet fit
+fit('$1', () => {
+	$2
+});
+endsnippet
+
+
 snippet itf
 it('$1', fakeAsync(() => {
+	$2
+}));
+endsnippet
+
+
+snippet fitf
+fit('$1', fakeAsync(() => {
 	$2
 }));
 endsnippet
