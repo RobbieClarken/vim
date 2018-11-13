@@ -30,7 +30,8 @@ Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
 Plug 'cespare/vim-toml'                 " TOML syntax support
 Plug 'leafgarland/typescript-vim'       " TypeScript syntax support
-Plug 'Galooshi/vim-import-js'           " Update typescript and javascript imports
+Plug 'Quramy/tsuquyomi'                 " Reveal TypeScript types and add omni-completion
+Plug 'Galooshi/vim-import-js'           " Update TypeScript and javascript imports
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
@@ -146,6 +147,9 @@ set complete-=i
 
 " Disable automatic comment continuation
 autocmd FileType * setlocal formatoptions-=cro
+
+" When entering a buffer, reload if the file changed outside of vim
+autocmd BufEnter * checktime
 
 " When reopening a file, jump to the last location
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
