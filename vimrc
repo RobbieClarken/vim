@@ -369,6 +369,12 @@ let g:LanguageClient_serverCommands = {
   \ }
 let g:LanguageClient_changeThrottle = 5
 let g:LanguageClient_diagnosticsEnable = 0 " prevent interference with ALE
+let g:LanguageClient_diagnosticsDisplay = {
+  \   1: { 'signTexthl': 'Error' },
+  \   2: { 'signTexthl': 'Todo' },
+  \   3: { 'signTexthl': 'Todo' },
+  \   4: { 'signTexthl': 'Todo' },
+  \}
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 
 " ===== Filetype Configuration ===== {{{1
