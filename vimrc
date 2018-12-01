@@ -14,8 +14,10 @@ Plug 'tpope/vim-fugitive'               " Git support
 Plug 'tpope/vim-projectionist'          " Switching from test file to implementation file
 Plug 'tpope/vim-commentary'             " Comment / uncomment code
 " Install fzf for fuzzy finding
-Plug 'junegunn/fzf', { 'dir': '~/.fzf',
-                     \ 'do': './install --all --no-completion --no-update-rc' }
+Plug 'junegunn/fzf', {
+  \ 'dir': '~/.fzf',
+  \ 'do': './install --all --no-completion --no-update-rc',
+  \ }
 Plug 'junegunn/fzf.vim'                 " Fuzzy find files with ctrl-p
 Plug 'SirVer/ultisnips'                 " Code snippets manager
 Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
@@ -31,6 +33,12 @@ Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
 Plug 'cespare/vim-toml'                 " TOML syntax support
 Plug 'leafgarland/typescript-vim'       " TypeScript syntax support
 Plug 'Quramy/tsuquyomi'                 " Reveal TypeScript types and add omni-completion
+" Utilise language-servers to provide better omnicompletion, navigation to definitions etc
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }
+Plug 'mattn/emmet-vim'                  " Autogenerate html
 Plug 'Galooshi/vim-import-js'           " Update TypeScript and javascript imports
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
@@ -144,6 +152,9 @@ let g:netrw_list_hide = '\v(__pycache__|.*\.swp)'
 
 " Prevent ins-completion from looking in node_modules
 set complete-=i
+
+" prevent omni-completion from opening preview window
+set completeopt-=preview
 
 " Disable automatic comment continuation
 autocmd FileType * setlocal formatoptions-=cro
@@ -278,7 +289,7 @@ nnoremap <leader>= YpVr=
 
 autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 
-" ------ grepping -----
+" ------ grepping ------
 
 if executable("rg")
   set grepprg=rg\ --vimgrep\ --smart-case
@@ -334,7 +345,7 @@ let g:airline#extensions#ale#enabled = 1
 " ------ mxw/vim-jsx ------
 let g:jsx_ext_required = 0
 
-" ----- w0rp/ale -----
+" ------ w0rp/ale ------
 
 let g:ale_sign_error = '✗✗'
 let g:ale_sign_column_always = 1
@@ -342,12 +353,23 @@ let g:ale_linters = {'rust': ['cargo']}
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_warn_about_trailing_whitespace = 0
 
-" ----- vimwiki/vimwiki -----
+" ------ vimwiki/vimwiki ------
 let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
 
-" ----- SirVer/ultisnips -----
+" ------ SirVer/ultisnips ------
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
 
+" ------ Quramy/tsuquyomi ------
+let g:tsuquyomi_disable_quickfix = 1
+
+" ------ autozimu/LanguageClient-neovim ------
+
+let g:LanguageClient_serverCommands = {
+  \ 'python': ['/usr/local/bin/pyls'],
+  \ }
+let g:LanguageClient_changeThrottle = 5
+let g:LanguageClient_diagnosticsEnable = 0 " prevent interference with ALE
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 
 " ===== Filetype Configuration ===== {{{1
 
@@ -367,8 +389,8 @@ autocmd FileType go setlocal noexpandtab
 autocmd FileType gitconfig setlocal noexpandtab
 
 let g:ale_pattern_options = {
-\ '.md$': {'ale_linters': [], 'ale_fixers': []},
-\}
+  \ '.md$': {'ale_linters': [], 'ale_fixers': []},
+  \ }
 
 " ===== Local vim configuration ===== {{{1
 
