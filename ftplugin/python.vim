@@ -1,1 +1,1 @@
-nnoremap <silent> <C-]> :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <C-]> :call g:GoToDefinition()<CR>

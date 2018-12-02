@@ -375,7 +375,17 @@ let g:LanguageClient_diagnosticsDisplay = {
   \   3: { 'signTexthl': 'Todo' },
   \   4: { 'signTexthl': 'Todo' },
   \}
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+
+function! g:GoToDefinitionCallback(output, ...) abort
+  " if language server failed to find definition, fall back to ctags
+  if len(get(a:output, 'result')) == 0
+    silent! execute ':tag ' . expand('<cword>')
+  endif
+endfunction
+
+function! g:GoToDefinition()
+  call LanguageClient#textDocument_definition({ 'handle': v:true }, 'g:GoToDefinitionCallback')
+endfunction
 
 " ===== Filetype Configuration ===== {{{1
 
