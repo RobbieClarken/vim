@@ -48,6 +48,7 @@ Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realti
 " base16 themes
 Plug 'chriskempson/base16-vim', { 'commit': '1a6e69111bf38ead6a65598689ec11f8cf507f4f' }
 Plug 'vim-scripts/SyntaxAttr.vim'       " Reveal syntax highlighting attributes
+Plug 'junegunn/vim-plug'                " Install help file for vim-plug
 call plug#end()
 
 filetype plugin indent on         " Enable loading plugins by filetype
