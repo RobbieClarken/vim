@@ -1,5 +1,5 @@
 snippet v
-version: "2"
+version: "3"
 
 services:
 	$1:
@@ -26,13 +26,13 @@ endsnippet
 
 
 snippet version
-version: '3'
+version: "3"
 services:
 	server:
 		image: nginx
 		container_name: server
 		ports:
-			- '80:80'
+			- "80:80"
 endsnippet
 
 
@@ -40,10 +40,10 @@ snippet pre
 repos:
 
 	- repo: https://github.com/prettier/prettier
-		rev: '1.12.0'
+		rev: "1.12.0"
 		hooks:
 			- id: prettier
-				files: '\.(js|ts)$'
+				files: "\.(js|ts)$"
 
 	- repo: https://github.com/ambv/black
 		rev: 18.9b0
@@ -66,6 +66,7 @@ repos:
 			- id: debug-statements
 			- id: flake8
 endsnippet
+
 
 snippet prettier
 singleQuote: true
