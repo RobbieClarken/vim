@@ -285,11 +285,11 @@ autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
 
-" ------ Opening Files ------
+" ------ Opening Files ------ {{{2
 
 autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
 
-" ------ grepping ------
+" ------ grepping ------ {{{2
 
 if executable("rg")
   set grepprg=rg\ --vimgrep\ --smart-case
@@ -299,16 +299,16 @@ endif
 
 " ===== Plugin Configuration ===== {{{1
 
-" ------ tpope/vim-unimpaired ------
+" ------ tpope/vim-unimpaired ------ {{{2
 
 " Use co as prefix for unimpaired toggle mappings
 nmap co yo
 
-" ------ junegunn/fzf.vim ------
+" ------ junegunn/fzf.vim ------ {{{2
 nnoremap <C-p> :Files<cr>
 nnoremap <C-q> :Files<cr>
 
-" ------ christoomey/vim-tmux-navigator ------
+" ------ christoomey/vim-tmux-navigator ------ {{{2
 
 let g:tmux_navigator_no_mappings = 1
 
@@ -327,10 +327,10 @@ inoremap <silent> <M-j> <Esc>:TmuxNavigateDown<cr>
 inoremap <silent> <M-k> <Esc>:TmuxNavigateUp<cr>
 inoremap <silent> <M-l> <Esc>:TmuxNavigateRight<cr>
 
-" ------ lervag/vimtex ------
+" ------ lervag/vimtex ------ {{{2
 let g:vimtex_view_method='skim'
 
-" ------ vim-airline/vim-airline ------
+" ------ vim-airline/vim-airline ------ {{{2
 
 let g:airline_left_sep = ' » '
 let g:airline_right_sep = ' « '
@@ -342,30 +342,31 @@ let g:airline_section_y=''
 let g:airline#extensions#virtualenv#enabled=0
 let g:airline#extensions#ale#enabled = 1
 
-" ------ mxw/vim-jsx ------
+" ------ mxw/vim-jsx ------ {{{2
 let g:jsx_ext_required = 0
 
-" ------ w0rp/ale ------
+" ------ w0rp/ale ------ {{{2
 
 let g:ale_sign_error = '✗✗'
 let g:ale_sign_column_always = 1
-let g:ale_linters = {'rust': ['cargo']}
+let g:ale_linters = {'rust': ['rls']}
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_warn_about_trailing_whitespace = 0
 
-" ------ vimwiki/vimwiki ------
+" ------ vimwiki/vimwiki ------ {{{2
 let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
 
-" ------ SirVer/ultisnips ------
+" ------ SirVer/ultisnips ------ {{{2
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
 
-" ------ Quramy/tsuquyomi ------
+" ------ Quramy/tsuquyomi ------ {{{2
 let g:tsuquyomi_disable_quickfix = 1
 
-" ------ autozimu/LanguageClient-neovim ------
+" ------ autozimu/LanguageClient-neovim ------ {{{2
 
 let g:LanguageClient_serverCommands = {
-  \ 'python': ['/usr/local/bin/pyls'],
+  \ 'python': ['~/.local/bin/pyls'],
+  \ 'rust': ['~/.cargo/bin/rls'],
   \ }
 let g:LanguageClient_changeThrottle = 5
 let g:LanguageClient_diagnosticsEnable = 0 " prevent interference with ALE
@@ -386,6 +387,15 @@ endfunction
 function! g:GoToDefinition()
   call LanguageClient#textDocument_definition({ 'handle': v:true }, 'g:GoToDefinitionCallback')
 endfunction
+
+function! EnableLanguageClient()
+  nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
+  nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <silent> <C-]> :call g:GoToDefinition()<CR>
+endfunction
+
+autocmd FileType python call EnableLanguageClient()
+autocmd FileType rust call EnableLanguageClient()
 
 " ===== Filetype Configuration ===== {{{1
 
@@ -408,18 +418,18 @@ let g:ale_pattern_options = {
   \ '.md$': {'ale_linters': [], 'ale_fixers': []},
   \ }
 
-" ===== Local vim configuration ===== {{{1
-
-if filereadable(".git/vimrc")
-  source .git/vimrc
-endif
-
-if filereadable("../.git/vimrc")
-  source ../.git/vimrc
-endif
-
 " ===== Abbreviations ===== {{{1
 
 iabbrev <expr> now# strftime("%Y-%m-%d %H:%M:%S")
+
+" ===== Local vim configuration ===== {{{1
+
+silent! let git_dir = trim(system("git rev-parse --git-dir"))
+if v:shell_error == 0
+  let local_vimrc = git_dir . "/vimrc"
+  if filereadable(local_vimrc)
+    execute ":source " . local_vimrc
+  endif
+endif
 
 " vim: foldmethod=marker nofoldenable

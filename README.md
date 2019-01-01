@@ -10,7 +10,7 @@ vim +PlugInstall +qall
 
 ```bash
 pipsi install python-language-server
-ln -s $(which pyls) /usr/local/bin/
+rustup component add --toolchain nightly rls-preview rust-analysis rust-src
 ```
 
 Other language servers are listed here: https://langserver.org/
