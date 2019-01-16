@@ -264,8 +264,9 @@ nnoremap <leader><up> :resize +5<CR>
 nnoremap <leader><down> :resize -5<CR>
 
 " Generate ctags
-nnoremap <leader>] :silent execute '!ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
-autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >/dev/null &' \| execute ':redraw!'<CR>
+nnoremap <leader>] :silent execute '!ctags -R . >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
+autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
+autocmd FileType rust nnoremap <leader>] :silent execute '!rusty-tags vi >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :StripWhitespace<cr>
@@ -391,6 +392,7 @@ endfunction
 
 function! EnableLanguageClient()
   nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
+  vnoremap <leader>m :call LanguageClient_contextMenu()<CR>
   nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
   nnoremap <silent> <C-]> :call g:GoToDefinition()<CR>
 endfunction
