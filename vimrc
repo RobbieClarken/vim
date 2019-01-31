@@ -252,8 +252,7 @@ inoremap <Nul> <Space>
 " Alternate buffers
 nnoremap <leader><leader> <c-^>
 
-nnoremap <leader>s :write<cr>
-nnoremap <leader>S :wall<cr>
+nnoremap <leader>s :wall<cr>
 nnoremap <leader>q :bdelete<CR>
 
 nnoremap <leader>v :source ~/.vimrc<CR>

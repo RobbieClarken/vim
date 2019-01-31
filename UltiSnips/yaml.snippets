@@ -1,74 +1,70 @@
-snippet v
-version: "3"
-
-services:
-	$1:
-		image: $2
-		ports: $0
-endsnippet
-
-
 snippet eslint
 extends:
-	- eslint:recommended
-	- plugin:react/recommended
+  - eslint:recommended
+  - plugin:react/recommended
 
 parser: babel-eslint
 
 env:
-	browser: true
-	es6: true
+  browser: true
+  es6: true
 
 rules:
-	react/prop-types: 0
-	no-console: 0
+  react/prop-types: 0
+  no-console: 0
 endsnippet
 
 
 snippet version
 version: "3"
 services:
-	server:
-		image: nginx
-		container_name: server
-		ports:
-			- "80:80"
+  server:
+    image: nginx
+    container_name: server
+    ports:
+      - "80:80"
 endsnippet
 
 
 snippet pre
 repos:
 
-	- repo: https://github.com/prettier/prettier
-		rev: "1.12.0"
-		hooks:
-			- id: prettier
-				files: "\.(js|ts)$"
+  - repo: https://github.com/prettier/prettier
+    rev: "1.16.3"
+    hooks:
+      - id: prettier
+        files: "\.(js|ts|html|css|scss|less)$"
 
-	- repo: https://github.com/ambv/black
-		rev: 18.9b0
-		hooks:
-			- id: black
-				args: [--safe, --quiet]
-				python_version: python3.6
+  - repo: https://github.com/ambv/black
+    rev: 18.9b0
+    hooks:
+      - id: black
+        args: [--safe, --quiet, --line-length, "95"]
+        language_version: python3.7
 
-	- repo: https://github.com/pre-commit/mirrors-isort
-		rev: v4.3.4
-		hooks:
-			- id: isort
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: "3.7.3"
+    hooks:
+      - id: flake8
+        language_version: python3.7
 
-	- repo: https://github.com/pre-commit/pre-commit-hooks
-		rev: v1.2.3
-		hooks:
-			- id: trailing-whitespace
-			- id: end-of-file-fixer
-			- id: check-yaml
-			- id: debug-statements
-			- id: flake8
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v4.3.4
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.1.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: debug-statements
 endsnippet
 
 
 snippet prettier
 singleQuote: true
 trailingComma: all
+printWidth: 100
 endsnippet
