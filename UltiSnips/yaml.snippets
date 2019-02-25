@@ -16,13 +16,13 @@ endsnippet
 
 
 snippet version
-version: "3"
+version: '3'
 services:
   server:
     image: nginx
     container_name: server
     ports:
-      - "80:80"
+      - '80:80'
 endsnippet
 
 
@@ -30,20 +30,19 @@ snippet pre
 repos:
 
   - repo: https://github.com/prettier/prettier
-    rev: "1.16.3"
+    rev: '1.16.3'
     hooks:
       - id: prettier
-        files: "\.(js|ts|html|css|scss|less)$"
+        files: '\.(js|ts|html|css|scss|less)$'
 
   - repo: https://github.com/ambv/black
     rev: 18.9b0
     hooks:
       - id: black
-        args: [--safe, --quiet, --line-length, "95"]
         language_version: python3.7
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: "3.7.3"
+    rev: '3.7.3'
     hooks:
       - id: flake8
         language_version: python3.7
@@ -67,4 +66,38 @@ snippet prettier
 singleQuote: true
 trailingComma: all
 printWidth: 100
+endsnippet
+
+
+snippet deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tmp-deployment
+  labels:
+    app: tmp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmp
+  template:
+    metadata:
+      labels:
+        app: tmp
+    spec:
+      containers:
+        - name: tmp
+          image: alpine
+          args:
+            - sh
+            - -c
+            - sleep 999999
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: tmp-data
 endsnippet
