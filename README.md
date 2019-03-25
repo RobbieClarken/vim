@@ -9,8 +9,9 @@ vim +PlugInstall +qall
 ## language-servers
 
 ```bash
-pipsi install python-language-server
+pipx install python-language-server
 rustup component add --toolchain nightly rls-preview rust-analysis rust-src
+npm install -g javascript-typescript-langserver
 ```
 
 Other language servers are listed here: https://langserver.org/

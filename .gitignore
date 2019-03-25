@@ -1,3 +1,4 @@
 plugged/
 spell/
 compiler/
+autoload/gocomplete.vim

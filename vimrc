@@ -26,6 +26,7 @@ Plug 'tommcdo/vim-exchange'             " Swap regions of text
 Plug 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
 Plug 'pangloss/vim-javascript'          " JavaScript syntax support
 Plug 'mxw/vim-jsx'                      " JSX syntax support
+Plug 'peitalin/vim-jsx-typescript'      " JSX in TypeScript syntax support
 Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plug 'lervag/vimtex'                    " LaTeX syntax support
 Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
@@ -33,6 +34,9 @@ Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
 Plug 'cespare/vim-toml'                 " TOML syntax support
 Plug 'leafgarland/typescript-vim'       " TypeScript syntax support
 Plug 'Quramy/tsuquyomi'                 " Reveal TypeScript types and add omni-completion
+Plug 'fatih/vim-go'                     " Go support
+" Omni-completion for Go
+Plug 'stamblerre/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 " Utilise language-servers to provide better omnicompletion, navigation to definitions etc
 Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
@@ -270,6 +274,9 @@ autocmd FileType rust nnoremap <leader>] :silent execute '!rusty-tags vi >/dev/n
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :StripWhitespace<cr>
 
+" Toggle whether trailing whitespace is visible
+nnoremap cot :ToggleWhitespace<cr>
+
 " <C-l> to clear search highlighting, turn off spell checking and redraw the screen
 nnoremap <silent> <C-l> :nohlsearch \| set nospell nocursorline<CR><C-l>
 
@@ -286,6 +293,10 @@ autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
 
+" Disable case-insensitive completion when <C-n> is hit in insert mode
+autocmd InsertEnter * set noignorecase
+autocmd InsertLeave * set ignorecase
+
 " ------ Opening Files ------ {{{2
 
 autocmd FileType html nnoremap <leader>o :!open -a 'Google Chrome' %<CR>
@@ -296,7 +307,6 @@ if executable("rg")
   set grepprg=rg\ --vimgrep\ --smart-case
   set grepformat=%f:%l:%c:%m
 endif
-
 
 " ===== Plugin Configuration ===== {{{1
 
@@ -362,12 +372,16 @@ let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
 
 " ------ Quramy/tsuquyomi ------ {{{2
 let g:tsuquyomi_disable_quickfix = 1
+autocmd FileType typescript noremap <buffer> K :<C-u>echo tsuquyomi#hint()<CR>
+autocmd FileType typescript.tsx noremap <buffer> K :<C-u>echo tsuquyomi#hint()<CR>
 
 " ------ autozimu/LanguageClient-neovim ------ {{{2
 
 let g:LanguageClient_serverCommands = {
   \ 'python': ['~/.local/bin/pyls'],
   \ 'rust': ['~/.cargo/bin/rls'],
+  \ 'javascript': ['~/.local/bin/javascript-typescript-stdio'],
+  \ 'javascript.jsx': ['~/.local/bin/javascript-typescript-stdio'],
   \ }
 let g:LanguageClient_changeThrottle = 5
 let g:LanguageClient_diagnosticsEnable = 0 " prevent interference with ALE
@@ -390,14 +404,26 @@ function! g:GoToDefinition()
 endfunction
 
 function! EnableLanguageClient()
-  nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
-  vnoremap <leader>m :call LanguageClient_contextMenu()<CR>
-  nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <silent> <C-]> :call g:GoToDefinition()<CR>
+  nnoremap <buffer> <leader>m :call LanguageClient_contextMenu()<CR>
+  vnoremap <buffer> <leader>m :call LanguageClient_contextMenu()<CR>
+  nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <buffer> <silent> <C-]> :call g:GoToDefinition()<CR>
 endfunction
 
 autocmd FileType python call EnableLanguageClient()
 autocmd FileType rust call EnableLanguageClient()
+autocmd FileType javascript call EnableLanguageClient()
+
+" ------ fatih/vim-go ------ {{{2
+
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
+autocmd FileType go nnoremap <buffer> <leader>i :GoImports<CR>
+autocmd FileType go nnoremap <leader>r :GoRun<CR>
+
+" ------ mattn/emmet-vim ------ {{{2
+
+imap <c-e> <c-y>,
 
 " ===== Filetype Configuration ===== {{{1
 
@@ -413,7 +439,8 @@ autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
 autocmd FileType php setlocal shiftwidth=4 tabstop=4
 autocmd FileType crontab setlocal commentstring=#\ %s
 autocmd FileType expect setlocal commentstring=#\ %s
-autocmd FileType go setlocal noexpandtab
+autocmd FileType go setlocal noexpandtab nolist
+autocmd FileType gomod setlocal noexpandtab
 autocmd FileType gitconfig setlocal noexpandtab
 
 let g:ale_pattern_options = {
