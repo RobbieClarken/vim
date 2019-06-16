@@ -42,6 +42,7 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
   \ }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}  " LSP client with better support for Java
 Plug 'mattn/emmet-vim'                  " Autogenerate html
 Plug 'Galooshi/vim-import-js'           " Update TypeScript and javascript imports
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
@@ -52,6 +53,8 @@ Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realti
 " base16 themes
 Plug 'chriskempson/base16-vim', { 'commit': '1a6e69111bf38ead6a65598689ec11f8cf507f4f' }
 Plug 'vim-scripts/SyntaxAttr.vim'       " Reveal syntax highlighting attributes
+Plug 'prettier/vim-prettier'            " Adds :Prettier command
+Plug 'bdauria/angular-cli.vim'          " Support for Angular projects
 Plug 'junegunn/vim-plug'                " Install help file for vim-plug
 call plug#end()
 
@@ -79,6 +82,9 @@ set list
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
+  if g:colors_name == 'base16-dracula'
+    highlight Comment ctermfg=103
+  endif
 endif
 
 highlight Comment cterm=italic
@@ -360,9 +366,25 @@ let g:jsx_ext_required = 0
 
 let g:ale_sign_error = '✗✗'
 let g:ale_sign_column_always = 1
-let g:ale_linters = {'rust': ['rls']}
+let g:ale_linters = {
+  \ 'rust': ['rls'],
+  \ }
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_warn_about_trailing_whitespace = 0
+let g:ale_pattern_options = {
+  \ '.md$': {'ale_linters': [], 'ale_fixers': []},
+  \ }
+
+" ------ bdauria/angular-cli.vim ------ {{{2
+
+autocmd FileType typescript,html call angular_cli#init()
+
+" easier navigation around related angular files
+nnoremap <leader>ac :EComponent<cr>
+nnoremap <leader>am :EModule<cr>
+nnoremap <leader>ah :ETemplate<cr>
+nnoremap <leader>as :EStylesheet<cr>
+nnoremap <leader>at :ESpec<cr>
 
 " ------ vimwiki/vimwiki ------ {{{2
 let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
@@ -414,12 +436,19 @@ autocmd FileType python call EnableLanguageClient()
 autocmd FileType rust call EnableLanguageClient()
 autocmd FileType javascript call EnableLanguageClient()
 
+" ------ neoclide/coc.nvim ------ {{{2
+
+autocmd FileType java nmap <silent> <C-]> <Plug>(coc-definition)
+autocmd FileType java inoremap <silent><expr> <C-x><C-o> coc#refresh()
+autocmd FileType java nnoremap <silent> K :call CocAction('doHover')<CR>
+
 " ------ fatih/vim-go ------ {{{2
 
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
 autocmd FileType go nnoremap <buffer> <leader>i :GoImports<CR>
 autocmd FileType go nnoremap <leader>r :GoRun<CR>
+autocmd FileType go nnoremap <leader>b :execute 'GoBuild '.getcwd()<CR>
 
 " ------ mattn/emmet-vim ------ {{{2
 
@@ -437,15 +466,12 @@ autocmd FileType vimwiki setlocal textwidth=100
 autocmd FileType rst setlocal shiftwidth=3 tabstop=3 textwidth=100
 autocmd FileType jinja setlocal shiftwidth=2 tabstop=2
 autocmd FileType php setlocal shiftwidth=4 tabstop=4
+autocmd FileType apache setlocal commentstring=#\ %s
 autocmd FileType crontab setlocal commentstring=#\ %s
 autocmd FileType expect setlocal commentstring=#\ %s
 autocmd FileType go setlocal noexpandtab nolist
 autocmd FileType gomod setlocal noexpandtab
 autocmd FileType gitconfig setlocal noexpandtab
-
-let g:ale_pattern_options = {
-  \ '.md$': {'ale_linters': [], 'ale_fixers': []},
-  \ }
 
 " ===== Abbreviations ===== {{{1
 
