@@ -1,4 +1,10 @@
 {
   "suggest.autoTrigger": "none",
+  "java.jdt.ls.vmargs": "-javaagent:/opt/jars/lombok.jar -Xbootclasspath/a:/opt/jars/lombok.jar",
+  "java.completion.favoriteStaticMembers": [
+    "org.hamcrest.Matchers.*",
+    "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
+    "org.springframework.test.web.servlet.result.MockMvcResultMatchers.*"
+  ],
   "coc.preferences.diagnostic.displayByAle": true
 }

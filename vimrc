@@ -438,9 +438,12 @@ autocmd FileType javascript call EnableLanguageClient()
 
 " ------ neoclide/coc.nvim ------ {{{2
 
-autocmd FileType java nmap <silent> <C-]> <Plug>(coc-definition)
+autocmd FileType java nmap <silent> <C-]> :<C-u>call CocActionAsync('jumpDefinition')<CR>
 autocmd FileType java inoremap <silent><expr> <C-x><C-o> coc#refresh()
-autocmd FileType java nnoremap <silent> K :call CocAction('doHover')<CR>
+autocmd FileType java nnoremap <silent> K :call CocActionAsync('doHover')<CR>
+autocmd FileType java nnoremap <buffer> <leader>i :CocCommand java.action.organizeImports<CR>
+autocmd FileType java nmap <leader>m <Plug>(coc-codeaction)
+autocmd FileType java nmap <leader>n <Plug>(coc-fix-current)
 
 " ------ fatih/vim-go ------ {{{2
 
