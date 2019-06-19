@@ -228,6 +228,16 @@ xnoremap & :&&<CR>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
+if has('nvim')
+  cnoremap <M-b> <S-Left>
+  cnoremap <M-f> <S-Right>
+  cmap <M-BS> <C-w>
+else
+  cnoremap <Esc>b <S-Left>
+  cnoremap <Esc>f <S-Right>
+  cmap <Esc><BS> <C-w>
+endif
+
 " Store large relative jumps in jumplist
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
