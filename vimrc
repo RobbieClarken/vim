@@ -35,6 +35,7 @@ Plug 'cespare/vim-toml'                 " TOML syntax support
 Plug 'leafgarland/typescript-vim'       " TypeScript syntax support
 Plug 'Quramy/tsuquyomi'                 " Reveal TypeScript types and add omni-completion
 Plug 'fatih/vim-go'                     " Go support
+Plug 'rust-lang/rust.vim'               " Rust syntax support
 " Omni-completion for Go
 Plug 'stamblerre/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 " Utilise language-servers to provide better omnicompletion, navigation to definitions etc
@@ -286,6 +287,7 @@ nnoremap <leader><down> :resize -5<CR>
 nnoremap <leader>] :silent execute '!ctags -R . >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
 autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
 autocmd FileType rust nnoremap <leader>] :silent execute '!rusty-tags vi >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
+autocmd FileType rust nnoremap <leader>p :RustFmt<CR>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :StripWhitespace<cr>
