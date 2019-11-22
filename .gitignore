@@ -1,4 +1,5 @@
-plugged/
-spell/
-compiler/
-autoload/gocomplete.vim
+/plugged/
+/spell/
+/compiler/
+/autoload/gocomplete.vim
+/black/

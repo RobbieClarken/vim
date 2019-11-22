@@ -54,7 +54,8 @@ Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realti
 " base16 themes
 Plug 'chriskempson/base16-vim', { 'commit': '1a6e69111bf38ead6a65598689ec11f8cf507f4f' }
 Plug 'vim-scripts/SyntaxAttr.vim'       " Reveal syntax highlighting attributes
-Plug 'prettier/vim-prettier'            " Adds :Prettier command
+Plug 'psf/black'                        " Adds :Black command for autoformatting Python
+Plug 'prettier/vim-prettier'            " Adds :Prettier command for autoformatting javascript
 Plug 'bdauria/angular-cli.vim'          " Support for Angular projects
 Plug 'junegunn/vim-plug'                " Install help file for vim-plug
 call plug#end()
@@ -386,6 +387,7 @@ let g:ale_warn_about_trailing_whitespace = 0
 let g:ale_pattern_options = {
   \ '.md$': {'ale_linters': [], 'ale_fixers': []},
   \ }
+let g:ale_java_javac_executable = 'java -cp /opt/jars/lombok.jar'
 
 " ------ bdauria/angular-cli.vim ------ {{{2
 
@@ -456,6 +458,7 @@ autocmd FileType java nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 autocmd FileType java nnoremap <buffer> <leader>i :CocCommand java.action.organizeImports<CR>
 autocmd FileType java nmap <leader>m <Plug>(coc-codeaction)
 autocmd FileType java nmap <leader>n <Plug>(coc-fix-current)
+autocmd FileType java nmap <leader>rn <Plug>(coc-rename)
 
 " ------ fatih/vim-go ------ {{{2
 
@@ -468,6 +471,10 @@ autocmd FileType go nnoremap <leader>b :execute 'GoBuild '.getcwd()<CR>
 " ------ mattn/emmet-vim ------ {{{2
 
 imap <c-e> <c-y>,
+
+" ------ psf/black ------ {{{2
+
+let g:black_linelength = 100
 
 " ===== Filetype Configuration ===== {{{1
 
