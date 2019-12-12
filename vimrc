@@ -274,6 +274,9 @@ inoremap <Nul> <Space>
 " Alternate buffers
 nnoremap <leader><leader> <c-^>
 
+" Navigate buffers with fzf
+nnoremap <leader>; :Buffers<CR>
+
 nnoremap <leader>s :wall<cr>
 nnoremap <leader>q :bdelete<CR>
 
