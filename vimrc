@@ -31,6 +31,7 @@ Plug 'tmux-plugins/vim-tmux'            " tmux.conf syntax support
 Plug 'lervag/vimtex'                    " LaTeX syntax support
 Plug 'wannesm/wmgraphviz.vim'           " Graphviz dot file syntax support
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 syntax support
+Plug 'joukevandermaas/vim-ember-hbs'    " Handlebar syntax support
 Plug 'cespare/vim-toml'                 " TOML syntax support
 Plug 'leafgarland/typescript-vim'       " TypeScript syntax support
 Plug 'Quramy/tsuquyomi'                 " Reveal TypeScript types and add omni-completion
@@ -75,6 +76,7 @@ set hlsearch                      " Highlight search matches.
 set incsearch                     " Highlight search matches as you type.
 set title                         " Set the terminal's title.
 set laststatus=2                  " Always show the status line.
+set noemoji                       " Make emoji widths match what the terminal thinks they are
 
 " Show tabs as fancy unicode characters
 set listchars=tab:└─
@@ -91,6 +93,9 @@ endif
 
 highlight Comment cterm=italic
 highlight Type cterm=italic
+" When executing a substitution with confirmation, make the match under consideration
+" stand out from the other highlighted matches in the buffer.
+highlight IncSearch term=reverse ctermfg=18 ctermbg=1
 
 " ===== Configure Vim ===== {{{1
 
@@ -292,6 +297,7 @@ nnoremap <leader>] :silent execute '!ctags -R . >/dev/null 2>&1 &' \| execute ':
 autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
 autocmd FileType rust nnoremap <leader>] :silent execute '!rusty-tags vi >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
 autocmd FileType rust nnoremap <leader>p :RustFmt<CR>
+autocmd FileType python nnoremap <leader>p :Black<CR>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :StripWhitespace<cr>
