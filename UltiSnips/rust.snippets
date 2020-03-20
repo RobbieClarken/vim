@@ -29,3 +29,11 @@ mod tests {
 	}
 }
 endsnippet
+
+snippet drop
+impl Drop for $1 {
+	fn drop(&mut self) {
+		println!("drop $1");
+	}
+}
+endsnippet

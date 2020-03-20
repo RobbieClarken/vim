@@ -414,6 +414,7 @@ let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': 
 
 " ------ SirVer/ultisnips ------ {{{2
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
+autocmd BufRead,BufNewFile .pre-commit-config.yaml :UltiSnipsAddFiletypes precommit.yaml
 
 " ------ Quramy/tsuquyomi ------ {{{2
 let g:tsuquyomi_disable_quickfix = 1
