@@ -21,6 +21,7 @@ Plug 'junegunn/fzf', {
 Plug 'junegunn/fzf.vim'                 " Fuzzy find files with ctrl-p
 Plug 'SirVer/ultisnips'                 " Code snippets manager
 Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
+Plug 'machakann/vim-highlightedyank'    " Briefly highlight what is yanked
 Plug 'triglav/vim-visual-increment'     " Create column of ascending numbers
 Plug 'tommcdo/vim-exchange'             " Swap regions of text
 Plug 'christoomey/vim-tmux-navigator'   " Navigate between vim and tmux panes
@@ -483,6 +484,10 @@ autocmd FileType go nnoremap <leader>b :execute 'GoBuild '.getcwd()<CR>
 " ------ psf/black ------ {{{2
 
 let g:black_linelength = 100
+
+" ------ machakann/vim-highlightedyank ------ {{{2
+
+let g:highlightedyank_highlight_duration = 300
 
 " ===== Filetype Configuration ===== {{{1
 
