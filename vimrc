@@ -45,7 +45,6 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'do': 'bash install.sh',
   \ }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}  " LSP client with better support for Java
-Plug 'mattn/emmet-vim'                  " Autogenerate html
 Plug 'Galooshi/vim-import-js'           " Update TypeScript and javascript imports
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
 Plug 'w0rp/ale'                         " Asynchronous linter
@@ -477,10 +476,6 @@ let g:go_fmt_command = "goimports"
 autocmd FileType go nnoremap <buffer> <leader>i :GoImports<CR>
 autocmd FileType go nnoremap <leader>r :GoRun<CR>
 autocmd FileType go nnoremap <leader>b :execute 'GoBuild '.getcwd()<CR>
-
-" ------ mattn/emmet-vim ------ {{{2
-
-imap <c-e> <c-y>,
 
 " ------ psf/black ------ {{{2
 
