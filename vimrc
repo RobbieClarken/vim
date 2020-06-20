@@ -320,6 +320,9 @@ autocmd FileType ruby nnoremap <leader>t :!bundle exec rspec<CR>
 " Underline current line with equals signs (for rst headings)
 nnoremap <leader>= YpVr=
 
+" Copy relative path to file to system clipboard
+nnoremap <silent> <leader>f :let @*=expand('%')<cr>:echo "copied: " . @*<cr>
+
 " Disable case-insensitive completion when <C-n> is hit in insert mode
 autocmd InsertEnter * set noignorecase
 autocmd InsertLeave * set ignorecase
