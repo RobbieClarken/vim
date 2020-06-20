@@ -48,7 +48,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'neoclide/coc.nvim', {'branch': 'release'}  " LSP client with better support for Java
 Plug 'Galooshi/vim-import-js'           " Update TypeScript and javascript imports
 Plug 'vim-scripts/ReplaceWithRegister'  " use grr
-Plug 'w0rp/ale'                         " Asynchronous linter
+Plug 'dense-analysis/ale'               " Asynchronous linter
 Plug 'vimwiki/vimwiki'                  " Personal wiki
 Plug 'Vimjas/vim-python-pep8-indent'    " PEP8 indentation
 Plug 'xtal8/traces.vim'                 " Show outcome of substitution in realtime
@@ -387,12 +387,13 @@ let g:airline#extensions#ale#enabled = 1
 " ------ mxw/vim-jsx ------ {{{2
 let g:jsx_ext_required = 0
 
-" ------ w0rp/ale ------ {{{2
+" ------ dense-analysis/ale ------ {{{2
 
 let g:ale_sign_error = '✗✗'
 let g:ale_sign_column_always = 1
 let g:ale_linters = {
   \ 'rust': ['rls'],
+  \ 'clojure': ['clj-kondo'],
   \ }
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_warn_about_trailing_whitespace = 0
@@ -431,6 +432,7 @@ let g:LanguageClient_serverCommands = {
   \ 'rust': ['~/.cargo/bin/rls'],
   \ 'javascript': ['~/.local/bin/javascript-typescript-stdio'],
   \ 'javascript.jsx': ['~/.local/bin/javascript-typescript-stdio'],
+  \ 'clojure': ['/usr/local/bin/clojure-lsp'],
   \ }
 let g:LanguageClient_changeThrottle = 5
 let g:LanguageClient_diagnosticsEnable = 0 " prevent interference with ALE
@@ -462,6 +464,7 @@ endfunction
 autocmd FileType python call EnableLanguageClient()
 autocmd FileType rust call EnableLanguageClient()
 autocmd FileType javascript call EnableLanguageClient()
+autocmd FileType clojure call EnableLanguageClient()
 
 " ------ neoclide/coc.nvim ------ {{{2
 
