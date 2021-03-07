@@ -25,7 +25,7 @@ repos:
         files: '\.(js|ts|html|css|scss|less)$'
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v3.4.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -35,26 +35,26 @@ endsnippet
 snippet "(py|python)" "python pre-commit config" r
 repos:
   - repo: https://github.com/ambv/black
-    rev: 19.10b0
+    rev: 20.8b1
     hooks:
       - id: black
         language_version: python3
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: '3.7.9'
+    rev: '3.8.4'
     hooks:
       - id: flake8
         language_version: python3
 
   - repo: https://github.com/timothycrosley/isort
-    rev: '4.3.21-2'
+    rev: '5.7.0'
     hooks:
       - id: isort
         additional_dependencies:
           - toml
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v3.4.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer

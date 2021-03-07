@@ -31,7 +31,7 @@ classifiers = [
 $1 = "$1.main:main"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 
 [tool.poetry.dev-dependencies]
 coverage = {version = "*", allows-prereleases = true, extras = ["toml"]}
@@ -42,13 +42,12 @@ pytest = "*"
 pytest-mock = "*"
 
 [tool.isort]
+profile = "black"
 combine_as_imports = true
-default_section = "THIRDPARTY"
-include_trailing_comma = true
-known_first_party = "$1"
+known_first_party = ["$1"]
 line_length = 100
 lines_after_imports = 2
-multi_line_output = 3
+skip_gitignore = true
 
 [tool.black]
 line-length = 100
