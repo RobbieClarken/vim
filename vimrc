@@ -143,13 +143,14 @@ set linebreak                     " Wrap lines at a sensible point.
 set backspace=indent,eol,start    " Intuitive backspacing.
 set nojoinspaces                  " Joining sentences should only insert 1 space.
 set formatoptions-=cro            " Disable automatic comment continuation.
+set formatoptions-=t              " Disable automatic line breaking
 set nrformats-=octal              " Make <C-a> behave sensibly for numbers with leading zeros.
 set diffopt+=vertical             " Use vertical splits for viewing diffs
 set splitbelow                    " Make horizontal splits (eg Gstatus) appear at the bottom
 set splitright                    " Make new vertical splits appear on the right
 set path+=**                      " Make :find look in subdirectories
 
-" Add folders that vimgrep shouldn't search
+" Add folders and filetypes that vimgrep shouldn't search and <C-x>f shouldn't complete
 set wildignore+=.venv/**
 set wildignore+=.git/**
 set wildignore+=node_modules/**
@@ -173,9 +174,6 @@ set complete-=i
 
 " prevent omni-completion from opening preview window
 set completeopt-=preview
-
-" Disable automatic comment continuation
-autocmd FileType * setlocal formatoptions-=cro
 
 " When entering a buffer, reload if the file changed outside of vim
 autocmd BufEnter * checktime
@@ -298,6 +296,7 @@ autocmd FileType javascript nnoremap <leader>] :silent execute '!es-ctags -R . >
 autocmd FileType rust nnoremap <leader>] :silent execute '!rusty-tags vi >/dev/null 2>&1 &' \| execute ':redraw!'<CR>
 autocmd FileType rust nnoremap <leader>p :RustFmt<CR>
 autocmd FileType python nnoremap <leader>p :Black<CR>
+autocmd FileType typescript nnoremap <leader>p :Prettier<CR>
 
 " Delete trailing white space with <Space>w
 nnoremap <leader>w :StripWhitespace<cr>
@@ -415,6 +414,10 @@ nnoremap <leader>at :ESpec<cr>
 
 " ------ vimwiki/vimwiki ------ {{{2
 let g:vimwiki_list = [{'path': '~/Dropbox/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
+
+" Prevent vimwiki from creating a local `diary` folder when `<space>w<space>w` is run
+" from inside a markdown file
+nnoremap <silent> <leader>w<leader>w :VimwikiMakeDiaryNote 1<CR>
 
 " ------ SirVer/ultisnips ------ {{{2
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
